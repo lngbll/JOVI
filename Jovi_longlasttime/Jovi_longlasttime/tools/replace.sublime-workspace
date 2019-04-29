@@ -1,0 +1,301 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Install Package Control"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 575.0,
+		"history":
+		[
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/E/Jovi_longlasttime/Jovi_longlasttime/spiders/blogspider.py",
+		"/E/SpiderKeeper.db",
+		"/E/视频下载清单/56网视频/总清单/星座.json",
+		"/D/Sublime Text 3/sublime_text.exe",
+		"/E/已经下载/腾讯视频/新闻/时政新闻.json",
+		"/E/百度视频/军事.json",
+		"/E/定期更新03-25/搜狗微信/财经迷.txt",
+		"/E/Zaker新闻/游戏.txt",
+		"/E/Zaker新闻/奢侈品.txt",
+		"/E/Zaker新闻/时尚.txt",
+		"/C/Users/陶世玉/Documents/vchat/ChatFiles/时政/时政_央视领导人_地方领导__地方领导.json",
+		"/E/视频下载清单/B站/总清单/美食/美食.json",
+		"/E/视频下载清单/百度视频/总清单/体育.json",
+		"/E/腾讯视频_教育/学历教育.json",
+		"/E/视频下载清单/56网视频/总清单/运动健康.json",
+		"/E/下载/proxy_pool-master/proxy_pool-master/Config/setting.py",
+		"/E/视频下载清单/品善网视频/总清单/母婴/孕前.json",
+		"/E/腾讯视频_教育/文化历史.json",
+		"/E/凤凰网/旅游/旅游资讯.txt",
+		"/F/腾讯视频/新闻/新闻人物/Thumbs222222222222222222222222222222222222222222222222222222.db",
+		"/E/已经下载/腾讯视频/新闻/腾讯拍客.json",
+		"/E/已经下载/腾讯视频/新闻/奇闻趣事.json",
+		"/E/已经下载/腾讯视频/新闻/社会新闻.json",
+		"/C/Users/陶世玉/Desktop/强力删.bat",
+		"/D/redis-windows-master/src/msopentech/redis-64.2.8.2101/Redis%20on%20Windows.docx",
+		"/E/视频下载清单/B站/总清单/宠物/宠物.json",
+		"/E/腾讯视频_教育/教育科普.json",
+		"/E/腾讯视频_时政/时政新闻.json",
+		"/D/redis-windows-master/src/msopentech/redis-64.2.8.2101/Redis%20on%20Windows%20Release%20Notes.docx",
+		"/E/CCTV/国家领导人.json",
+		"/D/anaconda/Lib/site-packages/you_get/extractors/letv.py",
+		"/E/腾讯短视频/财经.json",
+		"/C/Users/陶世玉/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/C/Users/陶世玉/AppData/Roaming/Sublime Text 3/Packages/User/Plain text.sublime-settings",
+		"/E/视频下载清单/腾讯短视频/总清单/动漫.json",
+		"/E/视频下载清单/腾讯短视频/总清单/科技.json",
+		"/E/视频下载清单/腾讯短视频/总清单/美食.json",
+		"/E/视频下载清单/腾讯短视频/总清单/汽车.json",
+		"/E/视频下载清单/腾讯短视频/总清单/体育.json",
+		"/E/视频下载清单/腾讯短视频/总清单/财经.json",
+		"/E/数据存储文档/视频1-25/百度视频1-25/体育.json",
+		"/E/数据存储文档/百度视频/体育.json",
+		"/E/数据存储文档/视频/爆米花视频/秀场.json",
+		"/E/视频下载清单/腾讯短视频/总清单/军事.json",
+		"/D/redis-windows-master/src/msopentech/redis-64.2.8.2101/redis.windows-service.conf",
+		"/E/腾讯短视频/体育.json",
+		"/E/搜狐自媒体/教育/外语学习.json",
+		"/E/搜狐自媒体/军事/全球军情 .json",
+		"/E/第一视频/美食.json",
+		"/E/第一视频/娱乐.json",
+		"/E/腾讯短视频/军事.json",
+		"/E/腾讯短视频/科技.json",
+		"/E/第一视频/音乐.json",
+		"/E/搜狐自媒体/旅游/澳洲.json",
+		"/E/56网视频/星座.json",
+		"/E/56网视频/运动健康.json",
+		"/E/第一视频/汽车.json",
+		"/E/已经下载/搜狐视频/做饭/日韩料理.json",
+		"/E/已经下载/搜狐视频/体育/节目.json",
+		"/E/数据存储文档/视频数据/游戏.json",
+		"/E/数据存储文档/视频数据/汽车.json",
+		"/E/已经下载/凤凰视频/汽车.json",
+		"/E/已经下载/凤凰视频/时尚.json",
+		"/E/已经下载/凤凰视频/游戏.json",
+		"/E/已经下载/凤凰视频/旅游.json",
+		"/E/已经下载/凤凰视频/美食.json",
+		"/E/已经下载/凤凰视频/动漫.json",
+		"/E/已经下载/凤凰视频/母婴.json",
+		"/E/视频下载清单/搜狐视频/总清单/做饭/家常菜.json",
+		"/E/数据存储文档/凤凰视频/凤凰视频/美食.json",
+		"/E/视频下载清单/搜狐视频/总清单/做饭/甜品烘焙.json",
+		"/E/凤凰视频/美食.json",
+		"/E/视频下载清单/腾讯视频/总清单/旅游.json",
+		"/E/低质新闻/低质新闻3-5_百度.txt",
+		"/E/wangyiyun_yinyue_1122/wangyiyun_yinyue_1122/get_album_comment_1129.py",
+		"/E/视频下载清单/搜狐视频/总清单/体育/花花体坛.json",
+		"/E/视频下载清单/搜狐视频/总清单/做饭/日韩料理.json",
+		"/E/低质新闻/低质新闻3-5(2)_UC.txt",
+		"/E/视频下载清单/搜狐视频/总清单/做饭/西餐.json",
+		"/E/视频下载清单/凤凰视频/总清单/母婴.json",
+		"/E/视频下载清单/凤凰视频/总清单/游戏.json",
+		"/E/视频下载清单/腾讯视频/总清单/游戏.json",
+		"/E/数据存储文档/视频/56网视频/母婴.json",
+		"/E/低质新闻/今日头条.txt",
+		"/E/视频下载清单/品尚网/总清单/情感/恋爱.json",
+		"/E/低质新闻/UC.txt",
+		"/E/低质新闻/一点资讯.txt",
+		"/E/凤凰视频/母婴.json",
+		"/E/视频下载清单/B站/总清单/游戏/GMV.json",
+		"/E/视频下载清单/西瓜视频/总清单/科技.json",
+		"/E/视频下载清单/西瓜视频/总清单/文化.json",
+		"/E/西瓜视频/生活.json",
+		"/E/西瓜视频/文化.json",
+		"/E/视频下载清单/品尚网/总清单/健康/瑜伽.json",
+		"/E/视频下载清单/腾讯视频_时政/总清单/时政新闻.json",
+		"/E/低质新闻/低质新闻2-28(2)_今日头条.txt",
+		"/E/视频下载清单/品尚网/总清单/健康/美体.json",
+		"/E/视频下载清单/品尚网/总清单/健康/丰胸.json",
+		"/E/视频下载清单/品尚网/总清单/健康/疾病.json",
+		"/E/视频下载清单/品尚网/总清单/情感/分娩期.json",
+		"/E/西瓜视频/科技.json",
+		"/E/西瓜视频/农人.json",
+		"/E/数据存储文档/视频数据2-13/视频数据2-13/西瓜视频/文化.json",
+		"/E/低质新闻/2.25低质新闻_UC.txt",
+		"/E/低质新闻/2.25低质新闻_百度.txt",
+		"/E/低质新闻/低质新闻2-26(2)_百度.txt",
+		"/E/低质新闻/低质新闻2-26(2)_一点资讯.txt",
+		"/E/数据存储文档/视频数据2-13/视频数据2-13/西瓜视频/科技.json",
+		"/E/低质新闻/低质新闻2-27_头条.txt",
+		"/E/视频下载清单/B站/总清单/动漫/短片·手书·配音.json",
+		"/E/视频下载清单/B站/总清单/生活/哔哩哔哩-生活-动物圈.json",
+		"/E/视频下载清单/B站/总清单/生活/哔哩哔哩-生活-美食圈.json",
+		"/E/视频下载清单/B站/总清单/动漫/MMD·3D.json",
+		"/E/视频下载清单/B站/总清单/游戏/桌游棋牌.json",
+		"/E/视频下载清单/腾讯视频_新闻/总清单/时政新闻.json",
+		"/E/下载/ver_00_22-1117910123-avc-415525-aac-48000-120800-7189294-578e8055e824f65e9dcc9f6d58ef9d55-1510041311858.m3u8",
+		"/E/低质新闻/低质新闻2-27_百度.txt",
+		"/E/低质新闻/低质新闻2-27_UC.txt",
+		"/E/低质新闻/低质新闻2-27_一点.txt",
+		"/E/低质新闻/低质新闻2-27(2)_今日头条.txt",
+		"/E/低质新闻/低质新闻2-27(2)_UC.txt",
+		"/E/低质新闻/低质新闻2-27(2)_一点资讯.txt",
+		"/E/数据存储文档/视频数据2-13/视频数据2-13/西瓜视频/生活.json",
+		"/E/低质新闻/低质新闻2-26(2).xlsx",
+		"/E/数据存储文档/视频/视频/乐视视频/教育.json",
+		"/E/低质新闻/低质新闻2-26(2)_今日头条.txt",
+		"/E/低质新闻/低质新闻2-26_UC.txt",
+		"/E/低质新闻/低质新闻2-26(2)_UC.txt"
+	],
+	"find":
+	{
+		"height": 28.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/Python/Python.sublime-build",
+	"project": "replace.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 50.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
