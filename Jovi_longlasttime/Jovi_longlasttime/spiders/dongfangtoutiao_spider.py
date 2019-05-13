@@ -56,16 +56,12 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
         'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
         'DOWNLOADER_MIDDLEWARES': {
             # 'Jovi_longlasttime.middlewares.ProxyMiddleware':300,
-            # 'Jovi_longlasttime.middlewares.UaMiddleware': 400,
-            # # 'Jovi_longlasttime.middlewares.SeleniumMiddleware':500,
-            # 'Jovi_longlasttime.middlewares.redisMiddleware': 200,
-            # 'Jovi_longlasttime.middlewares.RefererMiddleware': 500
+            'Jovi_longlasttime.middlewares.UaMiddleware': 400,
+            # 'Jovi_longlasttime.middlewares.SeleniumMiddleware':500,
+            'Jovi_longlasttime.middlewares.redisMiddleware': 200,
+            'Jovi_longlasttime.middlewares.RefererMiddleware': 500
             # 初始页需要Referer,才能请求到数据
         },
-        'ITEM_PIPELINES':{
-            # 'Jovi_longlasttime.pipelines.Redispipline': 200,
-        },
-        'LOG_LEVEL':'INFO',
         'CONCURRENT_REQUESTS': 500,
         'CONCURRENT_ITEMS': 500
     }
