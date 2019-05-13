@@ -10,6 +10,11 @@ from Jovi_longlasttime.items import JoviLonglasttimeItem
 
 class FenghuangNewSpiderSpider(scrapy.Spider):
     name = 'fenghuang_new_spider'
+
+    log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\fenghuang_new_spider'
+    date = time.strftime('%Y-%m-%d', time.localtime())
+
+
     # allowed_domains = ['i.ifeng.com']
     start_urls = ['http://i.ifeng.com/']
     meta = {
@@ -34,6 +39,7 @@ class FenghuangNewSpiderSpider(scrapy.Spider):
     }
 
     custom_settings = {
+        'LOG_FILE': '{}\\{}.log'.format(log_dir, date),
         'ITEM_PIPELINES':{
             'Jovi_longlasttime.pipelines.Redispipline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,

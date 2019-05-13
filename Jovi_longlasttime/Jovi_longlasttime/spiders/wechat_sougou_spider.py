@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-
+import time
 import scrapy
 
 from Jovi_longlasttime.items import JoviLonglasttimeItem
@@ -15,6 +15,8 @@ from Jovi_longlasttime.items import JoviLonglasttimeItem
 class WechatSougouSpiderSpider(scrapy.Spider):
     name = 'wechat_sougou_spider'
     start_urls = ['http://weixin.sogou.com/']
+    log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\搜狗微信_spider'
+    date = time.strftime('%Y-%m-%d', time.localtime())
     meta = {
         'third_tag': '',
         'meta': ''
@@ -22,6 +24,7 @@ class WechatSougouSpiderSpider(scrapy.Spider):
     channels = ['热门', '搞笑', '养生堂', '私房话', '八卦金', '科技咖', '财经迷', '汽车控', '生活家', '时尚圈', '育儿', '旅游',
                 '职场', '美食', '历史', '教育', '星座', '体育', '军事', '游戏', '萌宠']
     custom_settings = {
+        'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
         'ITEM_PIPELINES': {
             'Jovi_longlasttime.pipelines.Redispipline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,

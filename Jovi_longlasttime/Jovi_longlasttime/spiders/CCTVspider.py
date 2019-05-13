@@ -3,6 +3,7 @@ import json
 import re
 import scrapy
 from Jovi_longlasttime.items import JoviLonglasttimeItem
+import time
 
 """
 央视新闻各频道只开放前100条新闻，根据更新速度，可以看到昨天或者上星期的新闻，建议隔天开启爬虫，并一周汇总一次
@@ -11,6 +12,9 @@ from Jovi_longlasttime.items import JoviLonglasttimeItem
 
 class CctvspiderSpider(scrapy.Spider):
     name = 'CCTV_spider'
+
+    log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\CCTV_spider'
+    date = time.strftime('%Y-%m-%d', time.localtime())
     # allowed_domains = ['news.cctv.com']
     # start_urls = ['http://news.cctv.com/']
     meta = dict()
@@ -27,6 +31,7 @@ class CctvspiderSpider(scrapy.Spider):
         # 其中有几个板块人为的去掉了，因为这几个板块跳转到单独的网站，或者因为不适合作为新闻文章收录，加入会让脚本变复杂，其实也不缺这点数据
     }
     custom_settings = {
+        'LOG_FILE': '{}\\{}.log'.format(log_dir, date),
         'ITEM_PIPELINES' :{
             'Jovi_longlasttime.pipelines.Redispipline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,

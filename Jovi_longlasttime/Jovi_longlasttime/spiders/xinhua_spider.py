@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-import json
-import re
+import json,re,time
 
 import scrapy
 
@@ -12,7 +11,10 @@ class XinhuaSpiderSpider(scrapy.Spider):
     # allowed_domains = ['m.xinhuanet.com']
     start_urls = ['http://m.xinhuanet.com/']
     meta = dict()
+    log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\xinhua_spider'
+    date = time.strftime('%Y-%m-%d', time.localtime())
     custom_settings = {
+        'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
         'ITEM_PIPELINES': {
             'Jovi_longlasttime.pipelines.Redispipline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
+import time
 
 import scrapy
 
@@ -9,7 +10,15 @@ from Jovi_longlasttime.items import JoviLonglasttimeItem
 class IthomeSpiderSpider(scrapy.Spider):
     name = 'IThome_spider'
     # allowed_domains = ['www.ithome.com']
+    log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\IT之家_spider'
+    date = time.strftime('%Y-%m-%d', time.localtime())
+
     start_urls = ['https://www.ithome.com/sitemap/']
+
+    custom_settings = {
+        'LOG_FILE':'{}\\{}.log'.format(log_dir,date)
+    }
+
     meta = {
         "first_tag": 'IT之家',
         'second_tag': '',
@@ -18,7 +27,9 @@ class IthomeSpiderSpider(scrapy.Spider):
         'categoryid': '',
         # 'label':''
     }
-    no_parse = ['iPad之家','Win7之家','Vista之家','主题之家','Mac之家','VR之家','软件之家','Win8.1之家','iPhone之家','IE之家','Office之家','IT之外','WP之家','Mac之家','iOS之家']
+    no_parse = ['iPad之家', 'Win7之家', 'Vista之家', '主题之家', 'Mac之家', 'VR之家', '软件之家', 'Win8.1之家', 'iPhone之家', 'IE之家',
+                'Office之家', 'IT之外', 'WP之家', 'Mac之家', 'iOS之家']
+
     def parse(self, response):
         meta = self.meta
         nav = response.xpath('//div[@class="sitemap adblock"]/div[position()>1]')

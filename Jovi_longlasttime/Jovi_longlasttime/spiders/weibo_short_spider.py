@@ -10,10 +10,18 @@ from hashlib import sha1
 import redis
 import requests
 from scrapy import Selector
-
+import time,logging
 
 class weibo_short_spider(object):
     def __init__(self):
+        log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\weibo_short_spider'
+        date = time.strftime('%Y-%m-%d', time.localtime())
+        self.logger = logging.getLogger('weibo_long_spider')
+        self.logger.setLevel(logging.ERROR)
+        self.handler = logging.FileHandler('{}\\{}.log'.format(log_dir, date))
+        self.formatter = logging.Formatter('%(asctime)s-%(name)s-%(levelname)s-%(message)s')
+        self.handler.setFormatter(self.formatter)
+        self.logger.addHandler(self.handler)
         self.cookies = 'SINAGLOBAL=5410448660622.509.1543482216551; UOR=,,www.google.com; login_sid_t=47d185285b2a6490a92f0a254f648b7e; cross_origin_proto=SSL; _s_tentry=login.sina.com.cn; Apache=6214196438832.615.1556349541799; ULV=1556349541803:45:8:2:6214196438832.615.1556349541799:1555905085653; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WhTFGMYuXqMc8ZBnmZuAPaL5JpX5o275NHD95QfeoeXehMpSKzRWs4Dqcj_i--ci-zfiK.Xi--4iK.Ri-z0i--fiKysi-2Xi--4iKn0i-2pi--Xi-iWi-iW; SSOLoginState=1556349571; wvr=6; ALF=1587885601; SCF=AlGGDSpqLT23LmME-_qggKJQFn10ABSHFSJKq8tyoLAXEIjEZ-XuNF8SbCuTRqkgdKlen17Qihz2zkw1zHHI8fY.; SUB=_2A25xwHLyDeRhGeNM6FYR9y_JyTSIHXVStOM6rDV8PUNbmtAKLXTjkW9NTj-aGj4bcq6bY7BOI16uOmd2vY_6lPF0; SUHB=0N2Fzod6R1zlF9; wb_view_log_5234071528=1920*10801; webim_unReadCount=%7B%22time%22%3A1556349684806%2C%22dm_pub_total%22%3A0%2C%22chat_group_pc%22%3A0%2C%22allcountNum%22%3A0%2C%22msgbox%22%3A0%7D; YF-Page-G0=aabeaa17d9557111c805fb15a9959531|1556349707|1556349608'
         self.head1 = {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
@@ -139,8 +147,7 @@ class weibo_short_spider(object):
                 else:
                     print('太短>>%s' % (content[:11] + '...'))
         except Exception as e:
-            print('异常  %s' % url)
-            print(e)
+            self.logger.error('出现异常 %s'%url,exc_info=True)
 
     def main(self, url):
         os.chdir('e:')
@@ -167,14 +174,9 @@ class weibo_short_spider(object):
                         self.get_content(i, k, r)
                     page += 1
                 except Exception:
-                    time.sleep(600)
+                    logging.error('ip被禁',exc_info=True)
                     print('被禁IP,等待10分钟......')
-        # count = 0
-        # with open('统计.txt', 'w', encoding='utf-8') as c:
-        #     for i in counter.keys():
-        #         count += counter[i]
-        #         c.write('%s:%d\n' % (i, counter[i]))
-        #     c.write('总数：%s' % count)
+
 
 
 if __name__ == '__main__':
@@ -182,4 +184,4 @@ if __name__ == '__main__':
     url = 'https://d.weibo.com/?topnav=1&mod=logo&wvr=6'
     a = weibo_short_spider()
     a.main(url)
-    # a.get_page(1000,'102803_ctg1_6788_-_ctg1_6788')
+

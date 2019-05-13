@@ -11,6 +11,11 @@ from Jovi_longlasttime.items import JoviLonglasttimeItem
 
 class FenghuangSpiderSpider(scrapy.Spider):
     name = 'fenghuang_spider'
+
+    log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\fenghuang_spider'
+    date = time.strftime('%Y-%m-%d', time.localtime())
+
+
     allowed_domains = ['www.ifeng.com']
     start_urls = ['http://www.ifeng.com/']
     channels = {
@@ -131,7 +136,7 @@ class FenghuangSpiderSpider(scrapy.Spider):
     meta = dict()
     json_request_pattern = 'http://shankapi.ifeng.com/shanklist/_/getColumnInfo/_/default/{}/{}/20/{}'
     custom_settings = {
-        "LOG_LEVEL":'INFO',
+        'LOG_FILE': '{}\\{}.log'.format(log_dir, date),
         'ITEM_PIPELINES':{
             'Jovi_longlasttime.pipelines.Redispipline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,

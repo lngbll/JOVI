@@ -6,10 +6,15 @@ import scrapy
 
 from Jovi_longlasttime.items import JoviLonglasttimeItem
 
+import time
+
 
 class A163spiderSpider(scrapy.Spider):
     name = '163spider'
-    # allowed_domains = ['3g.163.com']
+
+    log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\a163_spider'
+    date = time.strftime('%Y-%m-%d', time.localtime())
+
     category = {
         '新闻': {
             '国内': 'BD29LPUBwangning',
@@ -96,6 +101,7 @@ class A163spiderSpider(scrapy.Spider):
         }
 
     }
+
     meta = {
         'first_tag': '手机网易网',
         'second_tag': '',
@@ -106,20 +112,14 @@ class A163spiderSpider(scrapy.Spider):
     }
 
     custom_settings = {
-        # 'DEPTH_PRIORITY':1,
-        # 'LOG_LEVEL':'DEBUG',
-        # 'DOWNLOADER_MIDDLEWARES':{
-        #         #     'Jovi_longlasttime.middlewares.ProxyMiddleware': 300,
-        #         #     'Jovi_longlasttime.middlewares.UaMiddleware': 400,
-        #         #     'Jovi_longlasttime.middlewares.SeleniumMiddleware': 500,
-        #         #     'Jovi_longlasttime.middlewares.redisMiddleware': 200
-        #         # },
+       'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
         'ITEM_PIPELINES' : {
             'Jovi_longlasttime.pipelines.Redispipline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,
             # 'Jovi_longlasttime.pipelines.Mongopipline': 400,
             'Jovi_longlasttime.pipelines.To_csv': 500
         }
+
     }
     def start_requests(self):
         meta = self.meta

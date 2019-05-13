@@ -14,6 +14,8 @@ from Jovi_longlasttime.items import JoviLonglasttimeItem
 class SohuSpiderSpider(scrapy.Spider):
     name = 'sohu_spider'
     # allowed_domains = ['www.sohu.com']
+    log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\sohu_spider'
+    date = time.strftime('%Y-%m-%d', time.localtime())
     start_urls = ['http://gov.sohu.com/']
     cat = ['娱乐', '汽车', '体育', '科技', '国内', '国际', '财经', '互联网', '军事', '游戏', '旅游', '教育', '时尚', '动漫',  '美食', '社会', '政务',
            '母婴', '宠物', '文化', '历史']
@@ -24,7 +26,7 @@ class SohuSpiderSpider(scrapy.Spider):
         'title': '',
     }
     custom_settings = {
-        # 'LOG_LEVEL':'DEBUG',
+        'LOG_file':'{}\\{}.log'.format(log_dir,date),
         'CONCURRENT_REQUESTS_PER_DOMAIN':100,
         # 'DEPTH_PRIORITY':1,
         'START_DIR': 'e:\搜狐网',

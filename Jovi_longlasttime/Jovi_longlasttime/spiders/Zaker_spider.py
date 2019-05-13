@@ -5,9 +5,12 @@ import re
 import scrapy
 
 from Jovi_longlasttime.items import JoviLonglasttimeItem
+import time
 
 
 class ZakerSpiderSpider(scrapy.Spider):
+    log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\Zaker_spider'
+    date = time.strftime('%Y-%m-%d', time.localtime())
     name = 'Zaker_spider'
     allowed_domains = ['www.myzaker.com']
     start_urls = ['http://www.myzaker.com/']
@@ -21,7 +24,7 @@ class ZakerSpiderSpider(scrapy.Spider):
 
     }
     custom_settings = {
-        # 'HTTPERROR_ALLOWED_CODES':['429'],
+        'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
         'ITEM_PIPELINES': {
             'Jovi_longlasttime.pipelines.Redispipline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,

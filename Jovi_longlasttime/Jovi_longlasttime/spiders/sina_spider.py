@@ -5,10 +5,13 @@ import re
 import scrapy
 
 from Jovi_longlasttime.items import JoviLonglasttimeItem
+import time
 
 
 class SinaSpiderSpider(scrapy.Spider):
     name = 'sina_spider'
+    log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\sina_spider'
+    date = time.strftime('%Y-%m-%d', time.localtime())
     allowed_domains = ['sina.cn']
     start_urls = ['https://sina.cn/index/nav?vt=4&pos=108&his=0']
     meta = {
@@ -18,6 +21,9 @@ class SinaSpiderSpider(scrapy.Spider):
         'source': '',
         'update_time': '',
         'title': ''
+    }
+    custom_settings = {
+        'LOG_FILE':'{}\\{}.log'.format(log_dir,date)
     }
 
     def parse(self, response):

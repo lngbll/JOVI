@@ -3,10 +3,13 @@ import json
 import re
 import scrapy
 from Jovi_longlasttime.items import JoviLonglasttimeItem
+import time
 
 
 # 内容太少，搁置
 class YidianNewSpiderSpider(scrapy.Spider):
+    log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\yidian_spider'
+    date = time.strftime('%Y-%m-%d', time.localtime())
     name = 'yidian_new_spider'
     allowed_domains = ['www.yidianzixun.com']
     start_urls = ['https://www.yidianzixun.com/']
@@ -32,6 +35,7 @@ class YidianNewSpiderSpider(scrapy.Spider):
             'Jovi_longlasttime.middlewares.redisMiddleware': 200
         },
         'ITEM_PIPELINES':{
+            'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
             # 'Jovi_longlasttime.pipelines.Redispipline': 200,
             # 'Jovi_longlasttime.pipelines.Duppipline': 300,
             # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源
@@ -58,7 +62,6 @@ class YidianNewSpiderSpider(scrapy.Spider):
         for i in urls:
             if 'V_' not in i:
                 url = 'https://www.yidianzixun.com' + i
-
                 yield scrapy.Request(url, callback=self.get_content, meta=meta)
 
     def get_content(self, response):

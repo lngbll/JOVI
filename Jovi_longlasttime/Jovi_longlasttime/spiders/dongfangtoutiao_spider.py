@@ -2,14 +2,14 @@
 import json
 import re
 import time
-
 import scrapy
-
 from Jovi_longlasttime.items import JoviLonglasttimeItem
 
 
 class DongfangtoutiaoSpiderSpider(scrapy.Spider):
     name = 'dongfangtoutiao_spider'
+    log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\dongfangtoutiao_spider'
+    date = time.strftime('%Y-%m-%d', time.localtime())
     # allowed_domains = ['mini.eastday.com']
     # start_urls = ['http://mini.eastday.com/']
     headers = {
@@ -53,16 +53,19 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
         '星座': {'星座': 'xingzuo'},
     }
     custom_settings = {
-        'LOG_LEVEL': 'ERROR',
-        # 'DEPTH_PRIORITY':0,
+        'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
         'DOWNLOADER_MIDDLEWARES': {
             # 'Jovi_longlasttime.middlewares.ProxyMiddleware':300,
-            'Jovi_longlasttime.middlewares.UaMiddleware': 400,
-            # 'Jovi_longlasttime.middlewares.SeleniumMiddleware':500,
-            'Jovi_longlasttime.middlewares.redisMiddleware': 200,
-            'Jovi_longlasttime.middlewares.RefererMiddleware': 500
+            # 'Jovi_longlasttime.middlewares.UaMiddleware': 400,
+            # # 'Jovi_longlasttime.middlewares.SeleniumMiddleware':500,
+            # 'Jovi_longlasttime.middlewares.redisMiddleware': 200,
+            # 'Jovi_longlasttime.middlewares.RefererMiddleware': 500
             # 初始页需要Referer,才能请求到数据
         },
+        'ITEM_PIPELINES':{
+            # 'Jovi_longlasttime.pipelines.Redispipline': 200,
+        },
+        'LOG_LEVEL':'INFO',
         'CONCURRENT_REQUESTS': 500,
         'CONCURRENT_ITEMS': 500
     }
@@ -89,7 +92,7 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
                 ts = int(time.time() * 1000)
                 url = 'https://pcflow.dftoutiao.com/toutiaopc_jrtt/newspool?type={}&uid=15439146142732770&startkey=||||&newkey=|&pgnum=1%idx=0&_={}'.format(type,meta[
                     'page_num'], ts)
-                yield scrapy.Request(url=url, callback=self.get_url, meta=meta)
+                yield scrapy.Request(url=url, callback=self.get_url,headers=self.headers, meta=meta)
 
     def get_url(self, response):
         meta = response.meta

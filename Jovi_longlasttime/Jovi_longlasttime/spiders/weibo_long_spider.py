@@ -4,11 +4,13 @@ import random
 import re
 import time
 from hashlib import sha1
-
+import logging
 import redis
 import requests
 from lxml import etree
 from scrapy import Selector
+
+
 
 
 class WeiBoLongSpider(object):
@@ -54,6 +56,16 @@ class WeiBoLongSpider(object):
 
     def __init__(self):
         # self.date = datetime.datetime.now().strftime('%m%d')
+
+        log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\weibo_long_spider'
+        date = time.strftime('%Y-%m-%d', time.localtime())
+        self.logger = logging.getLogger('weibo_long_spider')
+        self.logger.setLevel(logging.ERROR)
+        self.handler = logging.FileHandler('{}\\{}.log'.format(log_dir, date))
+        self.formatter = logging.Formatter('%(asctime)s-%(name)s-%(levelname)s-%(message)s')
+        self.handler.setFormatter(self.formatter)
+        self.logger.addHandler(self.handler)
+
         os.chdir('e:')
         self.dir = 'e:\\微博长文'
         if os.path.exists(self.dir):
@@ -77,8 +89,7 @@ class WeiBoLongSpider(object):
             urls = DOM.xpath('//ul[@class="pt_ul clearfix"]/li/@href')
             return urls
         except Exception as e:
-            print('出现异常%s' % url)
-            print(e)
+            self.logger.error('出现异常 %s'%url,exc_info=True)
 
     def json_to_dom(self, resp):
         try:
@@ -87,8 +98,8 @@ class WeiBoLongSpider(object):
             dom = etree.HTML(html)
             return dom
         except Exception as e:
-            print('出现异常')
-            print(e)
+            self.logger.error('出现异常',exc_info=True)
+
 
     def get_content(self, url, k):
         global counter
@@ -129,7 +140,7 @@ class WeiBoLongSpider(object):
                 else:
                     print('太短>>%s' % title)
         except Exception as e:
-            print('异常 :%s' % e)
+            self.logger.error('出现异常 %s'%url,exc_info=True)
 
     def main(self):
         global counter
@@ -149,7 +160,7 @@ class WeiBoLongSpider(object):
                             self.get_content(i, k)
                             time.sleep(0.5 * random.random())
                     except Exception as e:
-                        print(e)
+                        self.logger.error('出现异常',exc_info=True)
                 page += 1
         # count = 0
         # with open('统计.txt', 'w', encoding='utf-8') as c:

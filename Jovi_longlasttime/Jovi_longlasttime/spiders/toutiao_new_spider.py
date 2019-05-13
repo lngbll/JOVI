@@ -6,11 +6,14 @@ import scrapy
 from lxml import etree
 
 from Jovi_longlasttime.items import JoviLonglasttimeItem
+import time
 
 
 class ToutiaoNewSpiderSpider(scrapy.Spider):
     name = 'toutiao_new_spider'
     # allowed_domains = ['']
+    log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\toutiao_new_spider'
+    date = time.strftime('%Y-%m-%d', time.localtime())
     meta = {
         'first_tag': '今日头条',
         'second_tag': '',
@@ -67,6 +70,7 @@ class ToutiaoNewSpiderSpider(scrapy.Spider):
     #     #            }
     r = redis.Redis(host='localhost', port=6379, db=1)
     custom_settings = {
+        'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
         'ITEM_PIPELINES':{
             'Jovi_longlasttime.pipelines.Redispipline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,
