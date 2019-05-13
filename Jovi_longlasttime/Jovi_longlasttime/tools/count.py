@@ -10,7 +10,6 @@ def all_count(path):
             for i in os.listdir(_path):
                 os.chdir(_path)
                 sub_path = os.path.join(_path,i)
-
                 count(sub_path)
         else:
             with open(_path, 'r', encoding='utf-8') as f:
