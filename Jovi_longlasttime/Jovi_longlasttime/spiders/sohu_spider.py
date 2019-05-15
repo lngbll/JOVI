@@ -27,13 +27,11 @@ class SohuSpiderSpider(scrapy.Spider):
     }
     custom_settings = {
         'LOG_file':'{}\\{}.log'.format(log_dir,date),
-        'CONCURRENT_REQUESTS_PER_DOMAIN':100,
         # 'DEPTH_PRIORITY':1,
         'START_DIR': 'e:\搜狐网',
         'ITEM_PIPELINES':{
             'Jovi_longlasttime.pipelines.Redispipline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,
-            # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源
             'Jovi_longlasttime.pipelines.To_csv': 500
     }
     }
@@ -45,11 +43,6 @@ class SohuSpiderSpider(scrapy.Spider):
             firstTag = i.xpath('text()').extract_first()
             print('开始爬一级模块——%s' % firstTag)
             meta['first_tag'] = firstTag
-            # 有几个类别网站和别的不一样，直接校正
-            # if meta['first_tag'] == '房产':
-            #     meta['first_tag'] = '房产百科'
-            #     url = 'http://baike.focus.cn/f_xuanershoufang/'#房产百科
-            #     yield scrapy.Request(url=url, callback=self.get_nav, meta=meta)
             if meta['first_tag'] == '汽车':
                 url = 'http://www.sohu.com/c/18'
                 meta['first_tag'] = '汽车自媒体'  # 这个版块又变得和其他版块一样了
@@ -58,16 +51,8 @@ class SohuSpiderSpider(scrapy.Spider):
                 url = 'http://www.sohu.com/c/8'  # 这个版块又变得和其他版块一样了
                 yield scrapy.Request(url=url, callback=self.get_nav, meta=meta,dont_filter=True)
             elif meta['first_tag'] == '体育':
-                # today = datetime.date.today()
-                # oneDay = datetime.timedelta(days=1)
-                # for i in range(7):
-                #     date = time.strftime(str(today - i * oneDay))
-                #     date = time.strftime("%Y%m%d", time.strptime(date, "%Y-%m-%d"))
-                #     url = 'http://sports.sohu.com/_scroll_newslist/{}/news.inc'.format(date)
-                #     yield scrapy.Request(url=url, callback=self.get_urls, meta=meta,dont_filter=True)
                 url = 'https://sports.sohu.com/' #体育板块连接
                 yield scrapy.Request(url,callback=self.parse_sports,meta=meta,dont_filter=True)
-
             elif meta['first_tag']=='文化':
                 url = 'http://cul.sohu.com/category/reading'
                 yield scrapy.Request(url=url,callback=self.get_nav,meta=meta,dont_filter=True)
@@ -77,7 +62,6 @@ class SohuSpiderSpider(scrapy.Spider):
             elif meta['first_tag'] =='科技':
                 url = 'http://it.sohu.com/911'
                 yield scrapy.Request(url=url,callback=self.get_nav,meta=meta,dont_filter=True)
-
             elif meta['first_tag'] not in ['搜狐', '更多','专题','房产']:
                 url =i.xpath('@href').extract_first()
                 if not 'http:' in url:
@@ -87,7 +71,7 @@ class SohuSpiderSpider(scrapy.Spider):
 
     def parse_sports(self,response):
         meta = response.meta
-        second_tag_nodes = response.xpath('//div[@class="sports-navs"]//a[@clss="link-txt"]')
+        second_tag_nodes = response.xpath('//div[@class="sports-navs"]//a[@class="link-txt"]')
         meta['second_tag'] = '体育'
         for i in second_tag_nodes:
             meta['third_tag'] = i.xpath('@data-link-name').extract_first()
