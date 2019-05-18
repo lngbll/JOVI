@@ -27,6 +27,7 @@ class YidianNewSpiderSpider(scrapy.Spider):
 
     }
     custom_settings = {
+        'LOG_FILE': '{}\\{}.log'.format(log_dir, date),
         'REDIRECT_ENABLED': False,
         'DOWNLOADER_MIDDLEWARES': {
             'Jovi_longlasttime.middlewares.ProxyMiddleware': 300,
@@ -35,7 +36,6 @@ class YidianNewSpiderSpider(scrapy.Spider):
             'Jovi_longlasttime.middlewares.redisMiddleware': 200
         },
         'ITEM_PIPELINES':{
-            'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
             # 'Jovi_longlasttime.pipelines.Redispipline': 200,
             # 'Jovi_longlasttime.pipelines.Duppipline': 300,
             # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源

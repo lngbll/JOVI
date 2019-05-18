@@ -10,7 +10,6 @@ import execjs
 
 
 class toutiao(object):
-
     def __init__(self, url):
         self.url = url
         self.s = requests.session()
@@ -56,7 +55,7 @@ class toutiao(object):
         return source_url
 
     def get_js(self):
-        f = open(r"E:\Jovi_longlasttime\Jovi_longlasttime\signature.js", 'r', encoding='UTF-8')
+        f = open(r"E:\Jovi新闻项目\Jovi_longlasttime\Jovi_longlasttime\signature.js", 'r', encoding='UTF-8')
         line = f.readline()
         htmlstr = ''
         while line:

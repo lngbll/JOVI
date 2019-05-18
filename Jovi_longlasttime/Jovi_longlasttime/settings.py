@@ -39,7 +39,7 @@ ITEM_PIPELINES = {
 
 LOG_ENABLE = True
 # LOG_FILE = None #日志文件有专门的日志文件夹，每个spider分别存储
-LOG_LEVEL = 'ERROR'
+LOG_LEVEL = 'INFO'
 LOG_ENCODING = 'utf-8'
 date = time.strftime('%Y-%m-%d',time.localtime())
 

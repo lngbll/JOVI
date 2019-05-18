@@ -29,7 +29,7 @@ class WeiBoLongSpider(object):
         '运动健身': '623751_10009',
         '房产': '623751_9'
     }
-    cookies = 'SINAGLOBAL=5410448660622.509.1543482216551; UOR=,,www.google.com; login_sid_t=47d185285b2a6490a92f0a254f648b7e; cross_origin_proto=SSL; _s_tentry=login.sina.com.cn; Apache=6214196438832.615.1556349541799; ULV=1556349541803:45:8:2:6214196438832.615.1556349541799:1555905085653; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WhTFGMYuXqMc8ZBnmZuAPaL5JpX5o275NHD95QfeoeXehMpSKzRWs4Dqcj_i--ci-zfiK.Xi--4iK.Ri-z0i--fiKysi-2Xi--4iKn0i-2pi--Xi-iWi-iW; SSOLoginState=1556349571; wvr=6; ALF=1587885601; SCF=AlGGDSpqLT23LmME-_qggKJQFn10ABSHFSJKq8tyoLAXEIjEZ-XuNF8SbCuTRqkgdKlen17Qihz2zkw1zHHI8fY.; SUB=_2A25xwHLyDeRhGeNM6FYR9y_JyTSIHXVStOM6rDV8PUNbmtAKLXTjkW9NTj-aGj4bcq6bY7BOI16uOmd2vY_6lPF0; SUHB=0N2Fzod6R1zlF9; wb_view_log_5234071528=1920*10801; YF-Page-G0=aabeaa17d9557111c805fb15a9959531|1556349622|1556349608'
+    cookies = 'SINAGLOBAL=5410448660622.509.1543482216551; login_sid_t=a3e10bc62937f479201624b56561364f; cross_origin_proto=SSL; Ugrow-G0=968b70b7bcdc28ac97c8130dd353b55e; YF-V5-G0=451b3eb7a5a4008f8b81de1fcc8cf90e; WBStorage=53830d4156ad61ab|undefined; _s_tentry=login.sina.com.cn; UOR=,,www.google.com; Apache=9258604316606.305.1558166820896; ULV=1558166820902:54:7:4:9258604316606.305.1558166820896:1557819746740; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WhTFGMYuXqMc8ZBnmZuAPaL5JpX5o275NHD95QfeoeXehMpSKzRWs4Dqcj_i--ci-zfiK.Xi--4iK.Ri-z0i--fiKysi-2Xi--4iKn0i-2pi--Xi-iWi-iW; ALF=1589702849; SSOLoginState=1558166851; SCF=AlGGDSpqLT23LmME-_qggKJQFn10ABSHFSJKq8tyoLAX3T0-WVl0JXX29o2O7Bdk6MHzjd5AigzE91MT33KGXFo.; SUB=_2A25x280TDeRhGeNM6FYR9y_JyTSIHXVSkLnbrDV8PUNbmtBeLXb7kW9NTj-aGlenS6FpCwWVpfugdqoz-6LUQVlV; SUHB=06Z1NwxOkRA38q; wvr=6'
     headers1 = {
         'Accept': '*/*',
         'Accept-Encoding': 'gzip, deflate, br',
@@ -159,7 +159,7 @@ class WeiBoLongSpider(object):
                         for i in urls:
                             self.get_content(i, k)
                             time.sleep(0.5 * random.random())
-                    except Exception as e:
+                    except Exception:
                         self.logger.error('出现异常',exc_info=True)
                 page += 1
         # count = 0

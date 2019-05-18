@@ -62,8 +62,6 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
             'Jovi_longlasttime.middlewares.RefererMiddleware': 500
             # 初始页需要Referer,才能请求到数据
         },
-        'CONCURRENT_REQUESTS': 500,
-        'CONCURRENT_ITEMS': 500
     }
     meta = {
         'first_tag': '东方头条',

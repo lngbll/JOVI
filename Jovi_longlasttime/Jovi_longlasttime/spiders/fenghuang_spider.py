@@ -58,7 +58,6 @@ class FenghuangSpiderSpider(scrapy.Spider):
         '科技': {
             '数码': 'http://tech.ifeng.com/digi/',
             '手机': 'http://tech.ifeng.com/mobile/',
-            '24小时': 'http://tech.ifeng.com/24h/',
             '风眼': 'http://tech.ifeng.com/core/',
             '凤凰评测': 'http://tech.ifeng.com/lab/',
             '深度阅读': 'http://tech.ifeng.com/profound/',
@@ -137,14 +136,15 @@ class FenghuangSpiderSpider(scrapy.Spider):
     json_request_pattern = 'http://shankapi.ifeng.com/shanklist/_/getColumnInfo/_/default/{}/{}/20/{}'
     custom_settings = {
         'LOG_FILE': '{}\\{}.log'.format(log_dir, date),
+        'LOG_LEVEL':'ERROR',
         'ITEM_PIPELINES':{
             'Jovi_longlasttime.pipelines.Redispipline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,
             # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源
             'Jovi_longlasttime.pipelines.To_csv': 500
         },
-        'DOWNLOAD_DELAY':0,
-        'REDIRECT_ENABLE':False
+        'DOWNLOADER_DELAY':0,
+        'REDIRECT_ENABLED':False
     }
 
     def start_requests(self):
@@ -154,9 +154,9 @@ class FenghuangSpiderSpider(scrapy.Spider):
             for m,n in k.items():
                 meta['third_tag'] = m
                 if 'listpage' not in n:
-                    yield scrapy.Request(url=n,callback=self.get_str_url,meta=meta,dont_filter=True)
+                    yield scrapy.Request(url=n,callback=self.get_str_url,meta=meta)
                 else:
-                    yield scrapy.Request(url=n,callback=self.get_html_url,meta=meta,dont_filter=True)
+                    yield scrapy.Request(url=n,callback=self.get_html_url,meta=meta)
 
     # 解析以html形式的urls
     def get_html_url(self,response):
@@ -169,7 +169,7 @@ class FenghuangSpiderSpider(scrapy.Spider):
         for i in nav:
             meta['title'] = i.xpath('text()').extract_first().strip()
             url = i.xpath('@href').extract_first()
-            yield scrapy.Request(url=url, callback=self.get_content, meta=meta, dont_filter=True)
+            yield scrapy.Request(url=url, callback=self.get_content, meta=meta,dont_filter=True)
 
     # 解析javascript方式的urls
     def get_str_url(self,response):
@@ -229,7 +229,6 @@ class FenghuangSpiderSpider(scrapy.Spider):
                 else:
                     contents = []
                     print('内容是视频或者图片----%s' % response.url)
-
             except Exception as e:
                 print('可能发生跳转或者没有内容----%s' % response.url)
                 print(e)

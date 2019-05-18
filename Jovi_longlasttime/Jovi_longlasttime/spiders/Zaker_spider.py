@@ -31,7 +31,9 @@ class ZakerSpiderSpider(scrapy.Spider):
             # # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源
             'Jovi_longlasttime.pipelines.To_csv1': 500
         },
-        'DOWNLOAD_DELAY': 0.05,
+        'DOWNLOADER_MIDDLEWARES':{
+           'Jovi_longlasttime.middlewares.UaMiddleware': 400,
+        }
         # 'REDIRECT_ENABLED':False
     }
 

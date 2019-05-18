@@ -167,12 +167,13 @@ class To_csv1(object):
             os.chdir('%s\%s' % (self.START_DIR, first_tag))
         with open(second_tag + ".txt", 'a', encoding='utf-8') as file:
             file.write((item['article_title'] + "," + item['article_content'] + '\n'))
-            print('成功保存----%d' % self.stats.get_value('*总数'))
+            print(item['article_title'] + "," + item['article_content'] + '\n')
             self.stats.inc_value('*'+second_tag)
             self.stats.inc_value('*总数')
         return item
 
     def close_spider(self,spider):
+        pass
         # os.chdir('e:\\统计')
         # name = spider.__class__.__name__
         # a = self.stats.get_stats()
@@ -186,14 +187,14 @@ class To_csv1(object):
         #             record.append('%s:%s'%(k,v))
         #     record.sort()
         #     f.write(str(record))
-        os.chdir('e:\\统计')
-        name = spider.__class__.__name__
-        a = self.stats.get_stats()
-        date = self.stats.get_value('start_time').strftime('%m%d')
-        self.stats.set_value('start_time', 0)
-        self.stats.set_value('finish_time', 0)
-        with open('e:\\统计\\%s%s.txt' % (name, date), 'w', encoding='utf-8') as f:
-            for i in a.keys():
-                if i.startswith('*'):
-                    lines = '%s:%d\n' % (i, a[i])
-                    f.write(lines)
+        # os.chdir('e:\\统计')
+        # name = spider.__class__.__name__
+        # a = self.stats.get_stats()
+        # date = self.stats.get_value('start_time').strftime('%m%d')
+        # self.stats.set_value('start_time', 0)
+        # self.stats.set_value('finish_time', 0)
+        # with open('e:\\统计\\%s%s.txt' % (name, date), 'w', encoding='utf-8') as f:
+        #     for i in a.keys():
+        #         if i.startswith('*'):
+        #             lines = '%s:%d\n' % (i, a[i])
+        #             f.write(lines)
