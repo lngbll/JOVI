@@ -15,7 +15,7 @@ ROBOTSTXT_OBEY = False
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # CONCURRENT_REQUESTS = 32
 
-DOWNLOAD_DELAY = 0.5    #东方头条都开始反爬了，只能龟速了，在限速的同时，每周爬虫改为并行处理
+# DOWNLOAD_DELAY = 0.5    #东方头条都开始反爬了，只能龟速了，在限速的同时，每周爬虫改为并行处理
 # The download delay setting will honor only one of:
 # CONCURRENT_REQUESTS_PER_DOMAIN = 16
 # CONCURRENT_REQUESTS_PER_IP = 16
@@ -24,10 +24,10 @@ DOWNLOAD_DELAY = 0.5    #东方头条都开始反爬了，只能龟速了，在�
 
 
 DOWNLOADER_MIDDLEWARES = {
-    # # 'Jovi_longlasttime.middlewares.ProxyMiddleware':300,
-    # 'Jovi_longlasttime.middlewares.UaMiddleware': 400,
-    # # 'Jovi_longlasttime.middlewares.SeleniumMiddleware':500,
-    # 'Jovi_longlasttime.middlewares.redisMiddleware': 200
+    # 'Jovi_longlasttime.middlewares.ProxyMiddleware':300,
+    'Jovi_longlasttime.middlewares.UaMiddleware': 400,
+    # 'Jovi_longlasttime.middlewares.SeleniumMiddleware':500,
+    'Jovi_longlasttime.middlewares.redisMiddleware': 200
 }
 
 ITEM_PIPELINES = {

@@ -52,7 +52,7 @@ class YidianNewSpiderSpider(scrapy.Spider):
         cate = file['user_info']['user_channels']
         for i in cate:
             meta['second_tag'] = i['name']
-            if meta['second_tag'] not in ['首页','图片','一点号','比赛','美图','GIF图','段子','游戏','动漫','电台']:
+            if meta['second_tag'] not in ['首页','图片','一点号','比赛','美图','GIF图','段子','游戏','动漫','电台','搞笑']:
                 url = 'https://www.yidianzixun.com/channel/' + i['fromId']
                 yield scrapy.Request(url=url,callback=self.get_url,meta=meta)
 

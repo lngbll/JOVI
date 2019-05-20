@@ -62,12 +62,6 @@ class ToutiaoNewSpiderSpider(scrapy.Spider):
         'ch/news_food/':'美食'
 
     }
-    # headers = {'Accept': '*/*',
-    #     #            'Accept-Language': 'zh-CN',
-    #     #            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; .NET4.0C; .NET4.0E; .NET CLR 2.0.50727; .NET CLR 3.0.30729; .NET CLR 3.5.30729; InfoPath.3; rv:11.0) like Gecko',
-    #     #            'Connection': 'Keep-Alive',
-    #     #            'cookie': 'WEATHER_CITY=%E5%8C%97%E4%BA%AC; UM_distinctid=16656730a07210-0b829375af7ed8-2711639-1fa400-16656730a08785; csrftoken=e6aab52e7f9b61a3e1452cc3d6aac2bf; uuid="w:51c0cfecb20f42fca3b45d4da9f6e5c9"; tt_webid=75473670966; _ga=GA1.2.538565167.1539240022; tt_webid=75473670966; _gid=GA1.2.883932346.1539918717; CNZZDATA1259612802=1806236439-1539048066-https%253A%252F%252Fwww.google.com.hk%252F%7C1539929229; __tasessionId=z3j1tpwkn1539931601863'
-    #     #            }
     r = redis.Redis(host='localhost', port=6379, db=1)
     custom_settings = {
         'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
@@ -81,7 +75,8 @@ class ToutiaoNewSpiderSpider(scrapy.Spider):
 
     def start_requests(self):
         meta = self.meta
-        while True:
+        url = 1
+        while url:
             url = self.r.spop('toutiao')
             if url != None:
                 url = url.decode('utf-8')

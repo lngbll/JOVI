@@ -144,7 +144,6 @@ class SeleniumMiddleware(object):
         self.browser.close()
 
     def process_request(self, request, spider):
-
         if '/channel/' in request.url:
             self.browser.get(request.url)
             time.sleep(5)
