@@ -16,13 +16,13 @@ class weibo_short_spider(object):
     def __init__(self):
         log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\weibo_short_spider'
         date = time.strftime('%Y-%m-%d', time.localtime())
-        self.logger = logging.getLogger('weibo_long_spider')
+        self.logger = logging.getLogger('weibo_short_spider')
         self.logger.setLevel(logging.ERROR)
         self.handler = logging.FileHandler('{}\\{}.log'.format(log_dir, date))
         self.formatter = logging.Formatter('%(asctime)s-%(name)s-%(levelname)s-%(message)s')
         self.handler.setFormatter(self.formatter)
         self.logger.addHandler(self.handler)
-        self.cookies = 'SINAGLOBAL=5410448660622.509.1543482216551; wvr=6; login_sid_t=15eabedbe3d504ba094583fb48f2a12e; cross_origin_proto=SSL; _s_tentry=login.sina.com.cn; UOR=,,www.google.com; Apache=5026532364951.99.1558343298769; ULV=1558343298776:55:8:1:5026532364951.99.1558343298769:1558166820902; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WhTFGMYuXqMc8ZBnmZuAPaL5JpX5o275NHD95QfeoeXehMpSKzRWs4Dqcj_i--ci-zfiK.Xi--4iK.Ri-z0i--fiKysi-2Xi--4iKn0i-2pi--Xi-iWi-iW; ALF=1589879332; SSOLoginState=1558343332; SCF=AlGGDSpqLT23LmME-_qggKJQFn10ABSHFSJKq8tyoLAX1QMaf2aQIUm_KCfWJKsxB9hZIPq0tnj5XzIrRBgRoVQ.; SUB=_2A25x5h71DeRhGeNM6FYR9y_JyTSIHXVSknc9rDV8PUNbmtBeLXHEkW9NTj-aGitTlGeaAeJ-KHtncDuSoo3tEzFO; SUHB=0P180dM8OThHW1; wb_view_log_5234071528=1920*10801; webim_unReadCount=%7B%22time%22%3A1558343404682%2C%22dm_pub_total%22%3A0%2C%22chat_group_pc%22%3A0%2C%22allcountNum%22%3A0%2C%22msgbox%22%3A0%7D; YF-Page-G0=237c624133c0bee3e8a0a5d9466b74eb|1558343416|1558343389'
+        self.cookies = 'SINAGLOBAL=5410448660622.509.1543482216551; wvr=6; UOR=,,www.google.com; login_sid_t=36dc05f9956326dbcc4c8a0635ceb268; cross_origin_proto=SSL; _s_tentry=login.sina.com.cn; Apache=351898033401.97833.1558423964648; ULV=1558423964655:56:9:2:351898033401.97833.1558423964648:1558343298776; SSOLoginState=1558423994; TC-Page-G0=c4376343b8c98031e29230e0923842a5|1558424118|1558424099; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WhTFGMYuXqMc8ZBnmZuAPaL5JpX5o275NHD95QfeoeXehMpSKzRWs4Dqcj_i--ci-zfiK.Xi--4iK.Ri-z0i--fiKysi-2Xi--4iKn0i-2pi--Xi-iWi-iW; ALF=1590048646; SCF=AlGGDSpqLT23LmME-_qggKJQFn10ABSHFSJKq8tyoLAXfZJ8bSGOiPQHc87RNqiMpDjRKx4vdZulg_h97WmmdK4.; SUB=_2A25x4XRWDeRhGeNM6FYR9y_JyTSIHXVSl-KerDV8PUNbmtBeLXTGkW9NTj-aGj7559c9x4F7qTqQgmzBpVEULEyt; SUHB=0idbFvY-py2jb9; wb_view_log_5234071528=1920*10801; YF-Page-G0=f1e19cba80f4eeaeea445d7b50e14ebb|1558512741|1558512657; webim_unReadCount=%7B%22time%22%3A1558512752316%2C%22dm_pub_total%22%3A0%2C%22chat_group_pc%22%3A0%2C%22allcountNum%22%3A0%2C%22msgbox%22%3A0%7D'
         self.head1 = {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
             'Accept-Encoding': 'gzip, deflate, br',
