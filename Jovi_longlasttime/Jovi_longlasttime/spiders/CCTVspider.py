@@ -56,7 +56,7 @@ class CctvspiderSpider(scrapy.Spider):
 
     def get_content(self, response):
         meta = response.meta
-        contents = response.xpath('//div[@class="cnt_bd"]/p[not(script)] | //div[@class="shizhendema_Aind_9810_2013120304"]/div[@class="bd"]/p[not(script)]').xpath('string()').extract()
+        contents = response.xpath('//div[@class="cnt_bd"]/p[not(@style)] | //div[@class="shizhendema_Aind_9810_2013120304"]/div[@class="bd"]/p[not(@style)]').xpath('string()').extract()
         content = ''
         pattern = r'原标题：|原标题：'
         for i in contents:

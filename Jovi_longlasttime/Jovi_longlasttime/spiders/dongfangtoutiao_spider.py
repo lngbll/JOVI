@@ -23,14 +23,23 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
                '综艺': 'zongyi',
                '八卦': 'bagua',
                },
-        '科技': {'科技': 'keji',
+        '科技': {'科学': 'kexue',
+               '互联网': 'hulianwang',
+               '数码': 'shuma',
+               '区块链': 'qukuailian',
               },
         '体育': {'NBA': 'nba',
                 'CBA':'cba',
                 '德甲': 'dejia',
                '意甲': 'yijia',
                '中超': 'zhongchao',
-               '红彩': 'hongcai',},
+               '西甲': 'xijia',
+               '排球': 'paiqiu',
+               '英超': 'yingchao',
+               '网球': 'wangqiu',
+               '羽毛球': 'yumaoqiu',
+               '台球': 'taiqiu',
+               },
         '财经': {'外汇': 'waihui',
                '股票': 'gupiao',
                '基金': 'jijin',
@@ -54,6 +63,7 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
     }
     custom_settings = {
         'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
+        'DOWNLOADER_DELAY':0.5,
         'DOWNLOADER_MIDDLEWARES': {
             # 'Jovi_longlasttime.middlewares.ProxyMiddleware':300,
             'Jovi_longlasttime.middlewares.UaMiddleware': 400,
@@ -86,7 +96,7 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
                 ts = int(time.time() * 1000)
                 url = 'https://pcflow.dftoutiao.com/toutiaopc_jrtt/newspool?type={}&uid=15439146142732770&startkey=||||&newkey=|&pgnum=1%idx=0&_={}'.format(type,meta[
                     'page_num'], ts)
-                yield scrapy.Request(url=url, callback=self.get_url,headers=self.headers, meta=meta)
+                yield scrapy.Request(url=url, callback=self.get_url,headers=self.headers, meta=meta,dont_filter=True)
 
     def get_url(self, response):
         meta = response.meta
@@ -97,7 +107,7 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
                 url = i['url']
                 meta['source'] = i['source']
                 meta['title'] = i['topic'].strip()
-                yield scrapy.Request(url=url, callback=self.get_content, meta=meta)
+                yield scrapy.Request(url=url, callback=self.get_content, meta=meta,dont_filter=True)
             startkey = res['endkey']
             newkey = res['newkey']
             column = len(res['data'])
@@ -105,11 +115,13 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
             ts = int(time.time() * 1000)
             next_page = 'https://pcflow.dftoutiao.com/toutiaopc_jrtt/newspool?type={}&uid=15439146142732770&startkey={}&newkey={}&pgnum={}&_={}'.format(meta['type'],startkey,newkey,meta[
                     'page_num'], ts)
-            yield scrapy.Request(url=next_page, callback=self.get_url, meta=meta)
+            yield scrapy.Request(url=next_page, callback=self.get_url, meta=meta,dont_filter=True)
 
     def get_content(self, response):
         meta = response.meta
         next = response.xpath('//a[text()="下一页"]')
+        max_page = response.xpath('//a[text()="下一页"]/preceding-sibling::a[2]/text()').get()
+        current_page = response.xpath('//a[@class="cur"]/text()').get()
         contents = response.xpath('//div[@id="J-contain_detail_cnt"]//text()').extract()
         content = ''
         for i in contents:
@@ -119,7 +131,7 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
             else:
                 content += i.strip()
         meta['content'] += content
-        if next:
+        if max_page!=current_page:
             url = 'https://mini.eastday.com/a/' + next.xpath('@href').extract_first()
             yield scrapy.Request(url=url, callback=self.get_content, meta=meta)
         else:
@@ -131,7 +143,6 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
             item['update_time'] = response.xpath('//div[@class="fl"]/i[1]/text()').re_first(r'\d+-\d+-\d+')
             item['article_url'] = re.sub(r'-\d+', '', response.url)
             item['article_title'] = meta['title']
-            item['label'] = response.xpath('//ul[@class="tagcns"]/li/a/text()').extract()
             item['article_content'] = meta['content'].replace('\r', '').replace('\n', '').replace('\t', '').replace(
                 '\xa0', '').replace('\u3000', '').replace('\ufeff', '')
             yield item

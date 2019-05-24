@@ -6,3 +6,14 @@
 
 2019.5.20   1.搜狐网其实很规则，只是没有仔细看。重写sohu_spider.
             2.新华网手机版首页变更导致有些板块抓不到
+
+2019.5.23   1.CCTV_spider get_content函数修改xpath，去掉script
+
+2019.5.24   1.dongfangtoutiao_spider 没有开启爬虫导致爬虫被限制；优化get_content函数。
+            2.微博长文和微博短文每日爬能获得更多数据。
+            3.yidian_new_spider 爬虫item_pipeline 和middlewares 开启错误
+            4.sohu_spider 添加新闻版块
+            5.Zaker_spider 设置 downloader_delay 0.5
+            6.手机网页网发现410错误，改为每日更新
+            7.fenghuang_spider ，今日头条改为每日一爬
+            8.bat文件pause去掉

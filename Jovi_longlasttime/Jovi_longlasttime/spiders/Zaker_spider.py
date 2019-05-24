@@ -31,10 +31,7 @@ class ZakerSpiderSpider(scrapy.Spider):
             # # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源
             'Jovi_longlasttime.pipelines.To_csv1': 500
         },
-        'DOWNLOADER_MIDDLEWARES':{
-           'Jovi_longlasttime.middlewares.UaMiddleware': 400,
-        }
-        # 'REDIRECT_ENABLED':False
+        'DOWNLOADER_DELAY':0.5
     }
 
 
@@ -57,7 +54,6 @@ class ZakerSpiderSpider(scrapy.Spider):
         yield scrapy.Request(url,meta=meta,callback=self.get_url)
 
     def get_url(self, response):
-        # if response.body:
         meta = response.meta
         data = json.loads(response.text)
         try:

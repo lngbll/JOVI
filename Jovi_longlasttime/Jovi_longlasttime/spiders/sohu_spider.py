@@ -26,6 +26,7 @@ class SohuSpiderSpider(scrapy.Spider):
     }
     }
     channels = {
+        '新闻':'http://www.sohu.com/c/8',
         '汽车':'http://www.sohu.com/c/18',
         '旅游': 'http://travel.sohu.com',
         '教育': 'http://learning.sohu.com',
