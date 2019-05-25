@@ -1,10 +1,8 @@
 import codecs
-import datetime
 import json
 import os
 import random
 import re
-import time
 from hashlib import sha1
 
 import redis
@@ -22,7 +20,8 @@ class weibo_short_spider(object):
         self.formatter = logging.Formatter('%(asctime)s-%(name)s-%(levelname)s-%(message)s')
         self.handler.setFormatter(self.formatter)
         self.logger.addHandler(self.handler)
-        self.cookies = 'SINAGLOBAL=5410448660622.509.1543482216551; wvr=6; UOR=,,www.google.com; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WhTFGMYuXqMc8ZBnmZuAPaL5JpX5o275NHD95QfeoeXehMpSKzRWs4Dqcj_i--ci-zfiK.Xi--4iK.Ri-z0i--fiKysi-2Xi--4iKn0i-2pi--Xi-iWi-iW; login_sid_t=e1886d1c814307f9cb65add93f5abad2; cross_origin_proto=SSL; _s_tentry=login.sina.com.cn; Apache=6938462730432.089.1558599166048; ULV=1558599166055:57:10:3:6938462730432.089.1558599166048:1558423964655; ALF=1590135185; SSOLoginState=1558599185; SCF=AlGGDSpqLT23LmME-_qggKJQFn10ABSHFSJKq8tyoLAXbbuwEPY1PQ_kghzi9eJzsW47Ax7OlrtbC8oatZCnGGc.; SUB=_2A25x4iZCDeRhGeNM6FYR9y_JyTSIHXVSlhCKrDV8PUNbmtBeLRikkW9NTj-aGoce-Z5HxBfmlRZOVHOwCn830TSu; SUHB=0HTRW0_3WfMzRH; webim_unReadCount=%7B%22time%22%3A1558599264475%2C%22dm_pub_total%22%3A0%2C%22chat_group_pc%22%3A0%2C%22allcountNum%22%3A0%2C%22msgbox%22%3A0%7D; TC-Page-G0=b993e9b6e353749ed3459e1837a0ae89|1558599269|1558599266'
+        self.r = redis.Redis(host='localhost',port=6379,db=1)
+        self.cookies = self.r.get('cookies')
         self.head1 = {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
             'Accept-Encoding': 'gzip, deflate, br',

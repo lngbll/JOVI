@@ -1,59 +1,18 @@
 import json
+import logging
 import os
 import random
 import re
 import time
 from hashlib import sha1
-import logging
+
 import redis
 import requests
 from lxml import etree
 from scrapy import Selector
 
 
-
-
 class WeiBoLongSpider(object):
-    channels = {
-        '军事': '623751_4',
-        '宠物': '623751_10008',
-        '汽车': '623751_10',
-        '体育': '623751_3',
-        '财经': '623751_6',
-        '科技': '623751_5',
-        '美食': '623751_10012',
-        '育儿': '623751_10004',
-        '动漫': '623751_10005',
-        '历史': '623751_10013',
-        '游戏': '623751_10014',
-        '运动健身': '623751_10009',
-        '房产': '623751_9'
-    }
-    cookies = 'SINAGLOBAL=5410448660622.509.1543482216551; wvr=6; UOR=,,www.google.com; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WhTFGMYuXqMc8ZBnmZuAPaL5JpX5o275NHD95QfeoeXehMpSKzRWs4Dqcj_i--ci-zfiK.Xi--4iK.Ri-z0i--fiKysi-2Xi--4iKn0i-2pi--Xi-iWi-iW; login_sid_t=e1886d1c814307f9cb65add93f5abad2; cross_origin_proto=SSL; _s_tentry=login.sina.com.cn; Apache=6938462730432.089.1558599166048; ULV=1558599166055:57:10:3:6938462730432.089.1558599166048:1558423964655; ALF=1590135185; SSOLoginState=1558599185; SCF=AlGGDSpqLT23LmME-_qggKJQFn10ABSHFSJKq8tyoLAXbbuwEPY1PQ_kghzi9eJzsW47Ax7OlrtbC8oatZCnGGc.; SUB=_2A25x4iZCDeRhGeNM6FYR9y_JyTSIHXVSlhCKrDV8PUNbmtBeLRikkW9NTj-aGoce-Z5HxBfmlRZOVHOwCn830TSu; SUHB=0HTRW0_3WfMzRH; webim_unReadCount=%7B%22time%22%3A1558599264475%2C%22dm_pub_total%22%3A0%2C%22chat_group_pc%22%3A0%2C%22allcountNum%22%3A0%2C%22msgbox%22%3A0%7D; TC-Page-G0=b993e9b6e353749ed3459e1837a0ae89|1558599269|1558599266'
-
-    headers1 = {
-        'Accept': '*/*',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'zh-CN,zh;q=0.9',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Cookie': cookies,
-        'Host': 'd.weibo.com',
-        'Pragma': 'no-cache',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36',
-    }
-    headers2 = {
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'zh-CN,zh;q=0.9',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-        'Cookie': cookies,
-        'Host': 'weibo.com',
-        'Pragma': 'no-cache',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36'
-    }
 
     def __init__(self):
         # self.date = datetime.datetime.now().strftime('%m%d')
@@ -75,12 +34,52 @@ class WeiBoLongSpider(object):
             os.mkdir(self.dir)
             os.chdir(self.dir)
         self.r = redis.Redis(host='localhost', port=6379, db=1)
+        self.cookies = self.r.get('cookies')
+        self.channels = {
+            '军事': '623751_4',
+            '宠物': '623751_10008',
+            '汽车': '623751_10',
+            '体育': '623751_3',
+            '财经': '623751_6',
+            '科技': '623751_5',
+            '美食': '623751_10012',
+            '育儿': '623751_10004',
+            '动漫': '623751_10005',
+            '历史': '623751_10013',
+            '游戏': '623751_10014',
+            '运动健身': '623751_10009',
+            '房产': '623751_9'
+        }
+        self.headers1 = {
+            'Accept': '*/*',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Language': 'zh-CN,zh;q=0.9',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Cookie': self.cookies,
+            'Host': 'd.weibo.com',
+            'Pragma': 'no-cache',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36',
+        }
+        self.headers2 = {
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Language': 'zh-CN,zh;q=0.9',
+            'Cache-Control': 'no-cache',
+            'Connection': 'keep-alive',
+            'Cookie': self.cookies,
+            'Host': 'weibo.com',
+            'Pragma': 'no-cache',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36'
+        }
         print('redis开启')
 
     def start_requests(self, v, page):
         t = int(time.time() * 10000)
         page = page
-        url = 'https://d.weibo.com/p/aj/discover/loading?ajwvr=6&id={}&uid=5234071528&page={}&__rnd={}'.format(v, page, t)
+        url = 'https://d.weibo.com/p/aj/discover/loading?ajwvr=6&id={}&uid=5234071528&page={}&__rnd={}'.format(v, page,
+                                                                                                               t)
         return url
 
     def get_url(self, url):
@@ -90,7 +89,7 @@ class WeiBoLongSpider(object):
             urls = DOM.xpath('//ul[@class="pt_ul clearfix"]/li/@href')
             return urls
         except Exception as e:
-            self.logger.error('出现异常 %s'%url,exc_info=True)
+            self.logger.error('出现异常 %s' % url, exc_info=True)
 
     def json_to_dom(self, resp):
         try:
@@ -99,8 +98,7 @@ class WeiBoLongSpider(object):
             dom = etree.HTML(html)
             return dom
         except Exception as e:
-            self.logger.error('出现异常',exc_info=True)
-
+            self.logger.error('出现异常', exc_info=True)
 
     def get_content(self, url, k):
         global counter
@@ -141,7 +139,7 @@ class WeiBoLongSpider(object):
                 else:
                     print('太短>>%s' % title)
         except Exception as e:
-            self.logger.error('出现异常 %s'%url,exc_info=True)
+            self.logger.error('出现异常 %s' % url, exc_info=True)
 
     def main(self):
         global counter
@@ -161,7 +159,7 @@ class WeiBoLongSpider(object):
                             self.get_content(i, k)
                             time.sleep(0.5 * random.random())
                     except Exception:
-                        self.logger.error('出现异常',exc_info=True)
+                        self.logger.error('出现异常', exc_info=True)
                 page += 1
         # count = 0
         # with open('统计.txt', 'w', encoding='utf-8') as c:
