@@ -136,7 +136,7 @@ class weibo_short_spider(object):
                 print('重复>>%s' % (content[:11] + '...'))
                 return
             else:
-                if len(content) > 50:
+                if len(content) > 100:
                     line = content + '\n'
                     with open(k + '.txt', 'a', encoding="utf-8") as file:
                         file.write(line)

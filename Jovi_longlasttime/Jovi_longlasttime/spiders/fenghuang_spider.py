@@ -136,14 +136,12 @@ class FenghuangSpiderSpider(scrapy.Spider):
     json_request_pattern = 'http://shankapi.ifeng.com/shanklist/_/getColumnInfo/_/default/{}/{}/20/{}'
     custom_settings = {
         'LOG_FILE': '{}\\{}.log'.format(log_dir, date),
-        'LOG_LEVEL':'ERROR',
         'ITEM_PIPELINES':{
             'Jovi_longlasttime.pipelines.Redispipline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,
             # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源
             'Jovi_longlasttime.pipelines.To_csv': 500
         },
-        'DOWNLOADER_DELAY':0,
         'REDIRECT_ENABLED':False
     }
 

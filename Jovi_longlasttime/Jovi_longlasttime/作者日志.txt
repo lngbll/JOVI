@@ -17,3 +17,7 @@
             6.手机网页网发现410错误，改为每日更新
             7.fenghuang_spider ，今日头条改为每日一爬
             8.bat文件pause去掉
+
+2019.5.27   1.更改dongfangtoutiao_spider的get_content
+            3.微博短文过滤条件为大于100字
+            4.东方头条，Zaker设置为每日一爬

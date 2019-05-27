@@ -46,8 +46,6 @@ class FenghuangNewSpiderSpider(scrapy.Spider):
             # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源
             'Jovi_longlasttime.pipelines.To_csv1': 500
         }
-
-
     }
     def start_requests(self):
         meta = self.meta

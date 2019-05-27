@@ -119,9 +119,8 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
 
     def get_content(self, response):
         meta = response.meta
-        next = response.xpath('//a[text()="下一页"]')
-        max_page = response.xpath('//a[text()="下一页"]/preceding-sibling::a[2]/text()').get()
-        current_page = response.xpath('//a[@class="cur"]/text()').get()
+        current_page = response.xpath('//a[@class="cur"]')
+        next_page = current_page.xpath('following-sibling::a')
         contents = response.xpath('//div[@id="J-contain_detail_cnt"]//text()').extract()
         content = ''
         for i in contents:
@@ -131,8 +130,8 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
             else:
                 content += i.strip()
         meta['content'] += content
-        if max_page!=current_page:
-            url = 'https://mini.eastday.com/a/' + next.xpath('@href').extract_first()
+        if next_page:
+            url = 'https://mini.eastday.com/a/' + next_page.xpath('@href').extract_first()
             yield scrapy.Request(url=url, callback=self.get_content, meta=meta)
         else:
             item = JoviLonglasttimeItem()
