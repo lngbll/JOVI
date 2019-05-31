@@ -21,3 +21,6 @@
 2019.5.27   1.更改dongfangtoutiao_spider的get_content
             3.微博短文过滤条件为大于100字
             4.东方头条，Zaker设置为每日一爬
+
+2019.5.27   1.昨天不小心重启导致出现很多问题，就重装了python,升级了3.7,toutiao.py运行报错 no availeable
+                runtime,装了msi不行,然后装二进制版，行了，神奇。

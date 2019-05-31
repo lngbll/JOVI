@@ -7,8 +7,10 @@ from hashlib import sha1
 
 import redis
 import requests
+from requests import exceptions
 from scrapy import Selector
 import time,logging
+
 
 class weibo_short_spider(object):
     def __init__(self):
@@ -117,36 +119,38 @@ class weibo_short_spider(object):
         time.sleep(random.random())
         try:
             resp = requests.get(url, headers=self.head3)
-            data = json.loads(resp.text)
-            html = data['data']['html']
-            html = '<body>{}</body>'.format(html)
-            contents = Selector(text=html, type='html').xpath('//body/text()').extract()
-            pattern = r'来源|关注(.*?)公众号|关注(.*?)微信|原文|选自|公众号|来自|作者：|声明：|如有侵权|编辑|编者|记者|点击进入|提示：|转载联系|编辑|来源|图自|图源|报导'
-            content = ''
-            for i in contents:
-                if re.search(pattern, i):
-                    continue
-                else:
-                    content += i.strip()
-            content = content.replace('\xa0', '').replace('\u3000', '').replace('\r', '').replace('\n', '').replace(
-                '\t', '')
-            s1 = sha1(content.encode('utf-8'))
-            fp = s1.hexdigest()
-            if r.sismember('short_blog', fp):
-                print('重复>>%s' % (content[:11] + '...'))
-                return
+            resp.raise_for_status()
+        except exceptions:
+            return
+        data = json.loads(resp.text)
+        html = data['data']['html']
+        html = '<body>{}</body>'.format(html)
+        contents = Selector(text=html, type='html').xpath('//body/text()').extract()
+        pattern = r'来源|关注(.*?)公众号|关注(.*?)微信|原文|选自|公众号|来自|作者：|声明：|如有侵权|编辑|编者|记者|点击进入|提示：|转载联系|编辑|来源|图自|图源|报导'
+        content = ''
+        for i in contents:
+            if re.search(pattern, i):
+                continue
             else:
-                if len(content) > 100:
-                    line = content + '\n'
-                    with open(k + '.txt', 'a', encoding="utf-8") as file:
-                        file.write(line)
-                    counter[k] += 1
-                    r.sadd('short_blog', fp)
-                    print(content[:11] + '...')
-                else:
-                    print('太短>>%s' % (content[:11] + '...'))
-        except Exception as e:
-            self.logger.error('出现异常 %s'%url,exc_info=True)
+                content += i.strip()
+        content = content.replace('\xa0', '').replace('\u3000', '').replace('\r', '').replace('\n', '').replace(
+            '\t', '')
+        s1 = sha1(content.encode('utf-8'))
+        fp = s1.hexdigest()
+        if r.sismember('short_blog', fp):
+            print('重复>>%s' % (content[:11] + '...'))
+            return
+        else:
+            if len(content) > 100:
+                line = content + '\n'
+                with open(k + '.txt', 'a', encoding="utf-8") as file:
+                    file.write(line)
+                counter[k] += 1
+                r.sadd('short_blog', fp)
+                print(content[:11] + '...')
+            else:
+                print('太短>>%s' % (content[:11] + '...'))
+
 
     def main(self, url):
         os.chdir('e:')
@@ -182,5 +186,6 @@ if __name__ == '__main__':
     counter = dict()
     url = 'https://d.weibo.com/?topnav=1&mod=logo&wvr=6'
     a = weibo_short_spider()
+
     a.main(url)
 

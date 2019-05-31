@@ -1,16 +1,18 @@
 #!coding=utf-8
 import json
-import re
+import re,os
 
 import redis
 import requests
 
 
 import execjs
+import execjs.runtime_names
 
 
 class toutiao(object):
     def __init__(self, url):
+
         self.url = url
         self.s = requests.session()
         headers = {'Accept': '*/*',
@@ -56,11 +58,7 @@ class toutiao(object):
 
     def get_js(self):
         f = open(r"E:\Jovi新闻项目\Jovi_longlasttime\Jovi_longlasttime\signature.js", 'r', encoding='UTF-8')
-        line = f.readline()
-        htmlstr = ''
-        while line:
-            htmlstr = htmlstr + line
-            line = f.readline()
+        htmlstr = f.read()
         ctx = execjs.compile(htmlstr)
         return ctx.call('get_as_cp_signature')
 
@@ -79,5 +77,7 @@ if __name__ == '__main__':
         url = 'https://www.toutiao.com' + i['url']
         tt = toutiao(url)
         t = tt.getdata()
+        tt.closes()
         for j in t:
             r.sadd('toutiao', j)
+

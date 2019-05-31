@@ -10,7 +10,7 @@ import redis
 import requests
 from lxml import etree
 from scrapy import Selector
-
+from requests import exceptions
 
 class WeiBoLongSpider(object):
 
@@ -107,7 +107,11 @@ class WeiBoLongSpider(object):
                 url = url
             else:
                 url = 'https:' + url
-            resp = requests.get(url, headers=self.headers2)
+            try:
+                resp = requests.get(url, headers=self.headers2)
+                resp.raise_for_status()
+            except exceptions:
+                return
             resp = resp
             selector = Selector(resp)
             contents = selector.xpath('//div[@class="WB_editor_iframe_new"]/p//text()').extract()
@@ -172,4 +176,5 @@ class WeiBoLongSpider(object):
 if __name__ == '__main__':
     counter = dict()
     a = WeiBoLongSpider()
+
     a.main()
