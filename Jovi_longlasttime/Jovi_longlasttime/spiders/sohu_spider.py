@@ -19,11 +19,6 @@ class SohuSpiderSpider(scrapy.Spider):
     start_urls = ['http://gov.sohu.com/']
     custom_settings = {
         'LOG_file':'{}\\{}.log'.format(log_dir,date),
-        'ITEM_PIPELINES':{
-            'Jovi_longlasttime.pipelines.Redispipline': 200,
-            'Jovi_longlasttime.pipelines.Duppipline': 300,
-            'Jovi_longlasttime.pipelines.To_csv': 500
-    }
     }
     channels = {
         '新闻':'http://www.sohu.com/c/8',

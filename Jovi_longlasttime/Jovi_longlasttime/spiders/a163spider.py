@@ -113,13 +113,6 @@ class A163spiderSpider(scrapy.Spider):
 
     custom_settings = {
        'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
-        'ITEM_PIPELINES' : {
-            'Jovi_longlasttime.pipelines.Redispipline': 200,
-            'Jovi_longlasttime.pipelines.Duppipline': 300,
-            # 'Jovi_longlasttime.pipelines.Mongopipline': 400,
-            'Jovi_longlasttime.pipelines.To_csv': 500
-        }
-
     }
     def start_requests(self):
         meta = self.meta

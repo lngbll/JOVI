@@ -19,6 +19,27 @@ from selenium import webdriver
 
 from Jovi_longlasttime.Use_agent import UA_LIST
 from .proxy_pool import proxy_pool
+from .tools.bloomfilter import BloomFilter
+
+class BloomFilterMiddleware(object):
+    def __init__(self,host,port,db,capacity,error_rate):
+        self.redis = redis.StrictRedis(host,port,db)
+        self.bloomfilter = BloomFilter(redis=self.redis,capacity=capacity,error_rate=error_rate,redis_key='JOVI_URLS')
+
+    @classmethod
+    def from_crawler(cls,crawler):
+        return cls(
+            host=crawler.settings.get('REDIS_HOST'),
+            port=crawler.settings.get('REDIS_PORT'),
+            db=crawler.settings.get('REDIS_DB'),
+            capacity = crawler.settings.get('BLOOM_CAPACITY'),
+            error_rate = crawler.settings.get('BLOOM_ERROR_RATE')
+        )
+
+    def process_request(self,request,spider):
+        if self.bloomfilter.contains(request.url):
+            raise IgnoreRequest('已经爬过此url----%s'%request.url)
+        return None
 
 
 

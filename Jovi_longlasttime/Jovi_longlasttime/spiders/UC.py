@@ -32,7 +32,7 @@ class UcSpider(scrapy.Spider):
     no_parse = ['图片', '视频', '趣图', '摄影', '精品', '推荐']
     custom_settings = {
         'ITEM_PIPELINES':{
-            'Jovi_longlasttime.pipelines.Redispipline': 200,
+            'Jovi_longlasttime.pipelines.BloomFilterPipeline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,
             # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源
             'Jovi_longlasttime.pipelines.To_csv1': 500

@@ -11,6 +11,9 @@ import requests
 from lxml import etree
 from scrapy import Selector
 from requests import exceptions
+from ..tools.bloomfilter import BloomFilter
+from ..settings import *
+
 
 class WeiBoLongSpider(object):
 
@@ -34,6 +37,7 @@ class WeiBoLongSpider(object):
             os.mkdir(self.dir)
             os.chdir(self.dir)
         self.r = redis.Redis(host='localhost', port=6379, db=1)
+        self.bloomFilter = BloomFilter(redis=self.r,capacity=BLOOM_CAPACITY,error_rate=BLOOM_ERROR_RATE,redis_key='JOVI_ARTICLES')
         self.cookies = self.r.get('cookies')
         self.channels = {
             '军事': '623751_4',
@@ -127,9 +131,9 @@ class WeiBoLongSpider(object):
             content = content.replace('\xa0', '').replace('\u3000', '').replace('\r', '').replace('\n', '') \
                 .replace('\t', '')
             title = selector.xpath('//div[@class="title"]/text()').extract_first().strip()
-            s1 = sha1(title.encode('utf-8'))
-            fp = s1.hexdigest()
-            if self.r.sismember('article_title_fp_new', fp):
+            # s1 = sha1(title.encode('utf-8'))
+            # fp = s1.hexdigest()
+            if self.bloomFilter.contains(title):
                 print('重复>>%s' % title)
                 return
             else:
@@ -139,7 +143,7 @@ class WeiBoLongSpider(object):
                         file.write(line)
                         print(title[:20] + '...')
                     counter[k] += 1
-                    self.r.sadd('article_title_fp_new', fp)
+                    self.bloomFilter.add(title)
                 else:
                     print('太短>>%s' % title)
         except Exception as e:

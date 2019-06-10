@@ -36,7 +36,7 @@ class YidianNewSpiderSpider(scrapy.Spider):
             'Jovi_longlasttime.middlewares.redisMiddleware': 200
         },
         'ITEM_PIPELINES':{
-            'Jovi_longlasttime.pipelines.Redispipline': 200,
+            'Jovi_longlasttime.pipelines.BloomFilterPipeline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,
             # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源
             'Jovi_longlasttime.pipelines.To_csv1': 500

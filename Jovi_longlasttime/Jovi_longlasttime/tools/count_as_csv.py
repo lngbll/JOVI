@@ -5,7 +5,7 @@ from openpyxl import load_workbook
 import time
 
 date = time.strftime('%m-%d',time.localtime())
-path = 'e:\\数据统计03-25.xlsx'
+path = 'e:\数据统计.xlsx'
 dir = 'e:\定期更新{}'.format(date)
 
 os.chdir('E:\\')
@@ -61,7 +61,7 @@ def move_dir(dir):
 
 def remove_csv(dir,date):
     src = path
-    dst = '{}\\数据统计{}.csv'.format(dir,date)
+    dst = '{}\\数据统计{}.xlsx'.format(dir,date)
     try:
         shutil.copy2(src,dst)
     except Exception as e:

@@ -68,7 +68,7 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
             # 'Jovi_longlasttime.middlewares.ProxyMiddleware':300,
             'Jovi_longlasttime.middlewares.UaMiddleware': 400,
             # 'Jovi_longlasttime.middlewares.SeleniumMiddleware':500,
-            'Jovi_longlasttime.middlewares.redisMiddleware': 200,
+            'Jovi_longlasttime.middlewares.BloomFilterMiddleware': 200,
             'Jovi_longlasttime.middlewares.RefererMiddleware': 500
             # 初始页需要Referer,才能请求到数据
         },

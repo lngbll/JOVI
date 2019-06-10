@@ -24,3 +24,7 @@
 
 2019.5.27   1.昨天不小心重启导致出现很多问题，就重装了python,升级了3.7,toutiao.py运行报错 no availeable
                 runtime,装了msi不行,然后装二进制版，行了，神奇。
+
+
+2019.6.10   1.除了weibo_short_spider,其他爬虫都采用bloomfilter去重（1亿容量，十万分之1的误报率）
+            2.所有爬虫改为每日更新
