@@ -11,8 +11,8 @@ import requests
 from lxml import etree
 from scrapy import Selector
 from requests import exceptions
-from ..tools.bloomfilter import BloomFilter
-from ..settings import *
+from Jovi_longlasttime.Jovi_longlasttime.tools.bloomfilter import BloomFilter
+from Jovi_longlasttime.Jovi_longlasttime.settings import *
 
 
 class WeiBoLongSpider(object):
