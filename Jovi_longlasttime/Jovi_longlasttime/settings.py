@@ -37,7 +37,7 @@ ITEM_PIPELINES = {
     'Jovi_longlasttime.pipelines.To_csv': 500
 }
 
-LOG_ENABLE = True
+LOG_ENABLED = True
 # LOG_FILE = None #日志文件有专门的日志文件夹，每个spider分别存储
 LOG_LEVEL = 'ERROR'
 LOG_ENCODING = 'utf-8'

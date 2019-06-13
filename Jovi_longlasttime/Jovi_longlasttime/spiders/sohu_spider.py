@@ -18,7 +18,7 @@ class SohuSpiderSpider(scrapy.Spider):
     date = time.strftime('%Y-%m-%d', time.localtime())
     start_urls = ['http://gov.sohu.com/']
     custom_settings = {
-        'LOG_file':'{}\\{}.log'.format(log_dir,date),
+        'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
     }
     channels = {
         '新闻':'http://www.sohu.com/c/8',
