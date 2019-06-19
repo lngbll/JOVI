@@ -3,8 +3,7 @@ import logging
 import os
 import random
 import re
-import time
-from hashlib import sha1
+import sys
 
 import redis
 import requests
@@ -13,6 +12,7 @@ from scrapy import Selector
 from requests import exceptions
 from Jovi_longlasttime.tools.bloomfilter import BloomFilter
 from Jovi_longlasttime.settings import *
+
 
 
 class WeiBoLongSpider(object):
@@ -180,5 +180,4 @@ class WeiBoLongSpider(object):
 if __name__ == '__main__':
     counter = dict()
     a = WeiBoLongSpider()
-
     a.main()

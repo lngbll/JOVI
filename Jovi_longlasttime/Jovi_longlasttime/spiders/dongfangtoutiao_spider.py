@@ -62,8 +62,9 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
         '星座': {'星座': 'xingzuo'},
     }
     custom_settings = {
-        'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
-        'DOWNLOADER_DELAY':0.5,
+        'LOG_LEVEL':'INFO',
+        # 'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
+        'DOWNLOAD_DELAY':0.5,
         'DOWNLOADER_MIDDLEWARES': {
             # 'Jovi_longlasttime.middlewares.ProxyMiddleware':300,
             'Jovi_longlasttime.middlewares.UaMiddleware': 400,

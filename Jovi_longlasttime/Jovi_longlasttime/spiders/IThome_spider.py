@@ -70,7 +70,6 @@ class IthomeSpiderSpider(scrapy.Spider):
                 'page': str(meta['page'])
             }
             if meta['page'] < 100:
-                print('%s第%d页' % (meta['third_tag'], meta['page']))
                 yield scrapy.FormRequest(response.url, callback=self.get_url, meta=meta, formdata=formData)
         else:
             print('%s共%d页抓取完成' % (meta['third_tag'], meta['page']))
