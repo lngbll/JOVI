@@ -186,6 +186,5 @@ if __name__ == '__main__':
     counter = dict()
     url = 'https://d.weibo.com/?topnav=1&mod=logo&wvr=6'
     a = weibo_short_spider()
-
     a.main(url)
 

@@ -6,13 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="23aeb955-3a52-451a-8578-3fed1a423c74" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jovi_longlasttime/bats/IT之家.bat" beforeDir="false" afterPath="$PROJECT_DIR$/Jovi_longlasttime/bats/IT之家.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jovi_longlasttime/bats/微博长文.bat" beforeDir="false" afterPath="$PROJECT_DIR$/Jovi_longlasttime/bats/微博长文.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jovi_longlasttime/spiders/IThome_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/Jovi_longlasttime/spiders/IThome_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jovi_longlasttime/spiders/Zaker_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/Jovi_longlasttime/spiders/Zaker_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jovi_longlasttime/spiders/dongfangtoutiao_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/Jovi_longlasttime/spiders/dongfangtoutiao_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jovi_longlasttime/spiders/weibo_long_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/Jovi_longlasttime/spiders/weibo_long_spider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jovi_longlasttime/作者日志.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Jovi_longlasttime/作者日志.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Jovi_longlasttime/bats/每日新闻爬虫.bat" beforeDir="false" afterPath="$PROJECT_DIR$/Jovi_longlasttime/bats/每日新闻爬虫.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Jovi_longlasttime/spiders/weibo_short_spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/Jovi_longlasttime/spiders/weibo_short_spider.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -94,7 +89,7 @@
     <session id="1151929418">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="9" />
+          <entry key="project.closed" value="10" />
           <entry key="project.open.time.0" value="2" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.10" value="1" />
@@ -110,30 +105,32 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="bat" value="13" />
-          <entry key="py" value="74" />
+          <entry key="bat" value="16" />
+          <entry key="py" value="77" />
           <entry key="txt" value="5" />
           <entry key="xml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Bat" value="13" />
+          <entry key="Bat" value="16" />
           <entry key="PLAIN_TEXT" value="5" />
-          <entry key="Python" value="74" />
+          <entry key="Python" value="77" />
           <entry key="XML" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="2728" />
+          <entry key="bat" value="27" />
+          <entry key="py" value="4525" />
           <entry key="txt" value="401" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
+          <entry key="Bat" value="27" />
           <entry key="PLAIN_TEXT" value="401" />
-          <entry key="Python" value="2728" />
+          <entry key="Python" value="4525" />
         </counts>
       </usages-collector>
     </session>
@@ -153,28 +150,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/spiders/xinhua_spider.py">
+        <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/作者日志.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-132">
-              <caret line="17" column="55" lean-forward="true" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="55" />
+            <state relative-caret-position="504">
+              <caret line="32" column="24" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/作者日志.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="32" column="24" lean-forward="true" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/spiders/Zaker_spider.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="170" column="69" selection-start-line="170" selection-start-column="69" selection-end-line="170" selection-end-column="69" />
+            <state relative-caret-position="-279">
+              <caret line="135" column="65" selection-start-line="135" selection-start-column="65" selection-end-line="135" selection-end-column="65" />
               <folding>
                 <element signature="e#24#35#0" expanded="true" />
               </folding>
@@ -183,10 +171,28 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/spiders/weibo_short_spider.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="276">
+              <caret line="97" column="24" lean-forward="true" selection-start-line="97" selection-start-column="24" selection-end-line="97" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/bats/每日新闻爬虫.bat">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="99">
+              <caret line="3" column="30" lean-forward="true" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/spiders/yidian_new_spider.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2178">
-              <caret line="70" column="12" lean-forward="true" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="12" />
+            <state relative-caret-position="1485">
+              <caret line="70" column="12" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -201,32 +207,34 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/settings.py">
+        <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/middlewares.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="41" column="19" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="19" />
+            <state relative-caret-position="341">
+              <caret line="169" column="25" lean-forward="true" selection-start-line="169" selection-start-column="25" selection-end-line="169" selection-end-column="25" />
+              <folding>
+                <element signature="e#170#183#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/spiders/__init__.py">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/__init__.py">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/middlewares.py">
+        <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/spiders/autohome.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3630">
-              <caret line="123" selection-start-line="122" selection-start-column="8" selection-end-line="123" />
+            <state relative-caret-position="543">
+              <caret line="66" selection-start-line="66" selection-end-line="66" />
               <folding>
-                <element signature="e#170#183#0" expanded="true" />
+                <element signature="e#24#48#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/items.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="213">
+              <caret line="13" column="30" lean-forward="true" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -269,8 +277,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Jovi_longlasttime/spiders/sina_roll_spider.py" />
-        <option value="$PROJECT_DIR$/Jovi_longlasttime/spiders/sina_travel.py" />
         <option value="$PROJECT_DIR$/Jovi_longlasttime/spiders/weiboname.py" />
         <option value="$PROJECT_DIR$/Jovi_longlasttime/spiders/baidu_spider.py" />
         <option value="$PROJECT_DIR$/replace.py" />
@@ -304,7 +310,6 @@
         <option value="$PROJECT_DIR$/Jovi_longlasttime/spiders/sina_spider.py" />
         <option value="$PROJECT_DIR$/Jovi_longlasttime/spiders/wechat_sougou_spider.py" />
         <option value="$PROJECT_DIR$/Jovi_longlasttime/spiders/toutiao_new_spider.py" />
-        <option value="$PROJECT_DIR$/Jovi_longlasttime/spiders/weibo_short_spider.py" />
         <option value="$PROJECT_DIR$/Jovi_longlasttime/spiders/yidian_new_spider.py" />
         <option value="$PROJECT_DIR$/Jovi_longlasttime/spiders/tencent_new_spider.py" />
         <option value="$PROJECT_DIR$/Jovi_longlasttime/spiders/xinhua_spider.py" />
@@ -320,12 +325,15 @@
         <option value="$PROJECT_DIR$/Jovi_longlasttime/作者日志.txt" />
         <option value="$PROJECT_DIR$/Jovi_longlasttime/spiders/IThome_spider.py" />
         <option value="$PROJECT_DIR$/Jovi_longlasttime/spiders/Zaker_spider.py" />
+        <option value="$PROJECT_DIR$/Jovi_longlasttime/spiders/weibo_short_spider.py" />
+        <option value="$PROJECT_DIR$/Jovi_longlasttime/bats/每日新闻爬虫.bat" />
+        <option value="$PROJECT_DIR$/Jovi_longlasttime/spiders/autohome.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="96" />
-    <option name="y" value="-24" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="130" />
+    <option name="y" value="-15" />
     <option name="width" value="1738" />
     <option name="height" value="1100" />
   </component>
@@ -407,6 +415,12 @@
               <item name="Jovi_longlasttime" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="Jovi_longlasttime" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="bats" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="Jovi_longlasttime" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="Jovi_longlasttime" type="9f88c78c:ScopeViewTreeModel$FileNode" />
               <item name="spiders" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
             <path>
@@ -423,7 +437,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="formdata&#9;null&#9;null" />
-    <property name="last_opened_file_path" value="E:/usefulCode" />
+    <property name="last_opened_file_path" value="E:/DPspider" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -451,7 +465,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.weibo_short_spider">
+  <component name="RunManager" selected="Python.count_as_csv">
     <configuration name="新浪滚动" type="PythonConfigurationType" factoryName="Python">
       <module name="Jovi_longlasttime" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -714,9 +728,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.weibo_short_spider" />
-        <item itemvalue="Python.weibo_long_spider" />
         <item itemvalue="Python.count_as_csv" />
+        <item itemvalue="Python.weibo_long_spider" />
+        <item itemvalue="Python.weibo_short_spider" />
         <item itemvalue="Python.redisSet_to_bloomfilter" />
         <item itemvalue="Python.test" />
       </list>
@@ -746,21 +760,20 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.85300666" visible="true" weight="0.20064378" />
       <window_info id="Structure" order="1" sideWeight="0.14699332" side_tool="true" weight="0.2553648" />
       <window_info id="Favorites" order="2" sideWeight="0.5011136" side_tool="true" weight="0.48980686" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.38195992" />
-      <window_info anchor="bottom" x="0" y="23" width="1920" height="1017" id="Run" order="2" type="WINDOWED" weight="0.6781737" />
+      <window_info anchor="bottom" x="0" y="7" width="1920" height="1025" id="Run" order="2" type="WINDOWED" weight="0.6781737" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.1669173" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32739422" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.0" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.0" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.4443207" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.92538977" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -825,15 +838,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://G:/资讯类/代码/toutiao.py" />
-    <entry file="file://D:/anaconda/Lib/site-packages/scrapy/core/downloader/middleware.py" />
-    <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/tools/count_as_csv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="25" column="20" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/spiders/blogspider.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1089" />
@@ -959,13 +963,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
           <caret line="14" column="54" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/spiders/weibo_short_spider.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5808">
-          <caret line="187" selection-start-line="187" selection-end-line="187" />
         </state>
       </provider>
     </entry>
@@ -1099,16 +1096,6 @@
     <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/middlewares.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3630">
-          <caret line="123" selection-start-line="122" selection-start-column="8" selection-end-line="123" />
-          <folding>
-            <element signature="e#170#183#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="293">
@@ -1119,7 +1106,7 @@
     <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/spiders/xinhua_spider.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-132">
-          <caret line="17" column="55" lean-forward="true" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="55" />
+          <caret line="17" column="55" selection-start-line="17" selection-start-column="55" selection-end-line="17" selection-end-column="55" />
         </state>
       </provider>
     </entry>
@@ -1133,7 +1120,7 @@
     <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/作者日志.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
-          <caret line="32" column="24" lean-forward="true" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
+          <caret line="32" column="24" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -1144,20 +1131,61 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/spiders/yidian_new_spider.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2178">
-          <caret line="70" column="12" lean-forward="true" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/spiders/Zaker_spider.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="170" column="69" selection-start-line="170" selection-start-column="69" selection-end-line="170" selection-end-column="69" />
+        <state relative-caret-position="-279">
+          <caret line="135" column="65" selection-start-line="135" selection-start-column="65" selection-end-line="135" selection-end-column="65" />
           <folding>
             <element signature="e#24#35#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/spiders/weibo_short_spider.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="97" column="24" lean-forward="true" selection-start-line="97" selection-start-column="24" selection-end-line="97" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/spiders/yidian_new_spider.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1485">
+          <caret line="70" column="12" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/middlewares.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="169" column="25" lean-forward="true" selection-start-line="169" selection-start-column="25" selection-end-line="169" selection-end-column="25" />
+          <folding>
+            <element signature="e#170#183#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/items.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="13" column="30" lean-forward="true" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/spiders/autohome.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="543">
+          <caret line="66" selection-start-line="66" selection-end-line="66" />
+          <folding>
+            <element signature="e#24#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Jovi_longlasttime/bats/每日新闻爬虫.bat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="3" column="30" lean-forward="true" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
         </state>
       </provider>
     </entry>
