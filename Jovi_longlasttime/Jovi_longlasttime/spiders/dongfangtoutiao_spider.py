@@ -62,8 +62,8 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
         '星座': {'星座': 'xingzuo'},
     }
     custom_settings = {
-        'LOG_LEVEL':'INFO',
-        # 'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
+
+        'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
         'DOWNLOAD_DELAY':0.5,
         'DOWNLOADER_MIDDLEWARES': {
             # 'Jovi_longlasttime.middlewares.ProxyMiddleware':300,
@@ -103,7 +103,7 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
         meta = response.meta
         meta['page_num'] += 1
         res = json.loads(response.body.decode('utf-8').lstrip('null(').rstrip(')'))
-        if 'data' in list(res.keys()) and meta['page_num'] < 1000:
+        if 'data' in list(res.keys()) and meta['page_num'] < 100:
             for i in res['data']:
                 url = i['url']
                 meta['source'] = i['source']

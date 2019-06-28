@@ -69,10 +69,10 @@ class IthomeSpiderSpider(scrapy.Spider):
                 'type': 'pccategorypage',
                 'page': str(meta['page'])
             }
-            if meta['page'] < 100:
+            if meta['page'] < 30:
                 yield scrapy.FormRequest(response.url, callback=self.get_url, meta=meta, formdata=formData)
         else:
-            print('%s共%d页抓取完成' % (meta['third_tag'], meta['page']))
+            return
 
     def get_content(self, response):
         meta = response.meta
@@ -99,13 +99,4 @@ class IthomeSpiderSpider(scrapy.Spider):
         item['second_tag'] = meta['second_tag']
         item['third_tag'] = meta['third_tag']
         item['article_url'] = response.url
-        try:
-            item['source'] = response.xpath('//span[@id="source_baidu"]/a/text()').extract_first()
-        except:
-            item['source'] = ''
-        try:
-            item['update_time'] = response.xpath('//span[@id="pubtime_baidu"]/text()').re_first('\d+-\d+-\d+')
-        except:
-            item['update_time'] = ''
-        item['label'] = ''
         yield item

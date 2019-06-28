@@ -103,7 +103,6 @@ class Mongopipline(object):
 # 对于有三级标签的spider,使用这个pipeline
 class To_csv(object):
     def __init__(self, START_DIR, stats):
-
         self.stats = stats
         self.START_DIR = START_DIR
         self.stats.set_value('*总数', 0)

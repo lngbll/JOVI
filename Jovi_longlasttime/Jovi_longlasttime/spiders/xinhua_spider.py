@@ -62,7 +62,7 @@ class XinhuaSpiderSpider(scrapy.Spider):
                 meta['nid'], meta['page'])
             yield scrapy.Request(url=next_page, meta=meta, callback=self.get_urls)
         except KeyError:
-            print('%s在第%s页结束或异常' % (meta['second_tag'], meta['page']), end='\n')
+            return
 
     # 爬文章内容
     def get_article(self, response):

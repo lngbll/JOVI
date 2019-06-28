@@ -95,6 +95,10 @@ class ZakerSpiderSpider(scrapy.Spider):
         'dress.pclady.com.cn':{
             'title':'//*[@class="artCon"]/h1/text()',
             'ps':'//*[@id="artText"]//p//text()'
+        },
+        'xw.qq.com':{
+            'title':'//*[@class="tpl_header_title"]/text()',
+            'ps':'//*[@id="con"]//p//text()'
         }
     }
     meta = {

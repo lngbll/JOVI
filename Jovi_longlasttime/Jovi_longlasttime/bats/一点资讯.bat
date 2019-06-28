@@ -1,3 +1,4 @@
 E:
-cd e:\Jovi新闻项目\Jovi_longlasttime
-scrapy crawl yidian_new_spider
+cd e:\JOVI\Jovi_longlasttime
+scrapy crawl yidian_app
+
