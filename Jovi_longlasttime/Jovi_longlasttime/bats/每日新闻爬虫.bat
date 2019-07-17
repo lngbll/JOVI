@@ -1,5 +1,6 @@
 e:
 cd e:\JOVI\Jovi_longlasttime
+scrapy crawl renmingwang_spider
 scrapy crawl yidian_app
 scrapy crawl IThome_spider
 python e:\JOVI\Jovi_longlasttime\Jovi_longlasttime\spiders\toutiao.py

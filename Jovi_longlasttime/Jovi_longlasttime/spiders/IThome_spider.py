@@ -52,7 +52,7 @@ class IthomeSpiderSpider(scrapy.Spider):
             'type': 'pccategorypage',
             'page': '1'
         }
-        url = 'https://win7.ithome.com/ithome/getajaxdata.aspx'
+        url = 'https://it.ithome.com/ithome/getajaxdata.aspx'
         yield scrapy.FormRequest(url, formdata=formData, callback=self.get_url, meta=meta)
 
     def get_url(self, response):
@@ -69,7 +69,7 @@ class IthomeSpiderSpider(scrapy.Spider):
                 'type': 'pccategorypage',
                 'page': str(meta['page'])
             }
-            if meta['page'] < 30:
+            if meta['page'] < 10:
                 yield scrapy.FormRequest(response.url, callback=self.get_url, meta=meta, formdata=formData)
         else:
             return

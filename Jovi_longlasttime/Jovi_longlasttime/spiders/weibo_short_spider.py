@@ -24,6 +24,7 @@ class weibo_short_spider(object):
         self.logger.addHandler(self.handler)
         self.r = redis.Redis(host='localhost',port=6379,db=1)
         self.cookies = self.r.get('cookies')
+        print(self.cookies)
         self.head1 = {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
             'Accept-Encoding': 'gzip, deflate, br',

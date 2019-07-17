@@ -76,9 +76,9 @@ class ZakerSpiderSpider(scrapy.Spider):
             'title':'//*[@class="page-title"]/text()',
             'ps':'//*[@class="block recipe-show"]//text()'
         },
-        'm.haibao.com': {
+        'www.haibao.com': {
             'title': '//*[@id="jsArticleTitle"]/text()',
-            'ps': '//*[@class="block recipe-show"]//text()'
+            'ps': '//*[@id="jsArticleDesc"]//p//text()'
         },
         'mp.weixin.qq.com': {
             'title': '//*[@id="activity-name"]/text()',

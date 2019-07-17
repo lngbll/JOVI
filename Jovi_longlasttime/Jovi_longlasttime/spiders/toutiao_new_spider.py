@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-import re
-
+import re,time
 import redis
-import scrapy
 from lxml import etree
 
+import scrapy
+from scrapy import log
 from Jovi_longlasttime.items import JoviLonglasttimeItem
-import time
+
+
 
 
 class ToutiaoNewSpiderSpider(scrapy.Spider):
@@ -17,19 +18,18 @@ class ToutiaoNewSpiderSpider(scrapy.Spider):
     meta = {
         'first_tag': '今日头条',
         'second_tag': '',
-        'third_tag': '',
-        'en': '',
-        'source': '',
         'title': '',
-        'label': '',
-        'request_num':1
     }
     HTML_entity = {
+        r'\"':'"',
+        r"\u003C": "<",
+        r"\u003E": ">",
+        r"\u002F": "/",
         "&nbsp;": " ",
         "&lt;": "<",
         "&gt;": ">",
         "&amp;": "&",
-        "&quot;": "\"",
+        "\&quot;": r'"',
         "pos;": "'",
         "&cent;": "￠",
         "&pound;": "£",
@@ -86,35 +86,53 @@ class ToutiaoNewSpiderSpider(scrapy.Spider):
                     url = 'https:' + url
                     yield scrapy.Request(url=url, callback=self.get_content, meta=meta)
 
+
+
     def get_content(self, response):
         meta = response.meta
-        res = response.body.decode('utf-8')
+        res = response.text
         item = JoviLonglasttimeItem()
-        try:
-            content = re.search(r' content: \'(.*?)\',', res).group(1)
-            for k, v in self.HTML_entity.items():
-                content = content.replace(k, v)
-            article_contents = etree.HTML(content).xpath('//p//text()')
-            pattern = r"图片来自|原标题：|选自：|公众号|▲|文章来自|本文|来源|｜|来自网络|作者：|声明：|译自|如有侵权|\||责任编辑：|编者按|往期回顾|记者|点击进入|联合出品|【精彩推荐】|·|责编|源丨|文丨|转载联系"
-            article_content = ''
-            for i in article_contents:
-                text = str(i).strip()
-                if re.search(pattern, text, re.S):
-                    continue
-                else:
-                    article_content += i.strip()
-            item['article_content'] = article_content.replace('\r', '').replace('\n', '').replace('\t', '').replace(
+        content = re.search(r' content: \'(.*?)\'.slice\(6, -6\),', res)
+        title = re.search(r' title: \'(.*?)\'.slice\(6, -6\),',res)
+        second_tag = re.search(r'chineseTag: \'(.*?)\',',res)
+        if content:
+            content = content.group(1)[6:-6]
+        else:
+            log.msg('此URL没有文章----%s'%response.url,level=log.INFO)
+            return
+        if title:
+            title = title.group(1)[6:-6]
+            # log.msg(response.url,level=log.INFO)
+        else:
+            log.msg('此URL没有标题----%s'%response.url,level=log.INFO)
+            return
+        if second_tag:
+            second_tag=second_tag.group(1)
+        else:
+            log.msg('此URL没有二级标签----%s'%response.url,level=log.INFO)
+            return
+        for k,j in self.HTML_entity.items():
+            content = content.replace(k,j)
+        # print(content)
+        e = etree.HTML(content).xpath('//p//text()')
+        pattern = r"图片来自|原标题：|选自：|公众号|▲|文章来自|本文|来源|｜|来自网络|作者：|声明：|译自|如有侵权|\||责任编辑：|编者按|往期回顾|记者|点击进入|联合出品|【精彩推荐】|·|责编|源丨|文丨|转载联系"
+        article = ''
+        for i in e:
+            if re.search(pattern,i):
+                continue
+            else:
+                article+=i.strip()
+        article = article.replace('\r', '').replace('\n', '').replace('\t', '').replace(
                 '\xa0', '').replace('\u3000', '').replace('\u200b', '')
-            item['first_tag'] = meta['first_tag']
-            item['article_url'] = response.url
-            crumbTag = re.search(r'crumbTag: \'(.*?)\',', res, re.S).group(1)
-            item['second_tag'] = self.cate[crumbTag]
-            item['article_title'] = re.search(r' title: \'(.*?)\',', res, re.S).group(1).strip()
-            yield item
-        except:
-            if meta['request_num']<15:
-                meta['request_num'] += 1
-                yield scrapy.Request(url=response.url,callback=self.get_content,meta=meta,dont_filter=True)
+        item['article_content'] = article
+        item['article_title'] =title
+        item['first_tag'] = meta['first_tag']
+        item['second_tag'] = second_tag
+        item['article_url'] = response.url
+        yield item
+
+
+
 
 
 

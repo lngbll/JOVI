@@ -22,9 +22,6 @@ class YidianAppSpider(scrapy.Spider):
     cookies = {'JSESSIONID':'u4uOLPjqh3pdOcnGjcWkHQ'}
     custom_settings = {
         'LOG_FILE':'{}\\{}'.format(log_dir,date),
-        'DOWNLOADER_MIDDLEWARES' :{
-            'Jovi_longlasttime.middlewares.BloomFilterMiddleware': 200
-        },
         'ITEM_PIPELINES':{
             'Jovi_longlasttime.pipelines.BloomFilterPipeline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,

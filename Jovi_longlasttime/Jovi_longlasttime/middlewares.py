@@ -32,8 +32,8 @@ class BloomFilterMiddleware(object):
             host=crawler.settings.get('REDIS_HOST'),
             port=crawler.settings.get('REDIS_PORT'),
             db=crawler.settings.get('REDIS_DB'),
-            capacity = crawler.settings.get('BLOOM_CAPACITY'),
-            error_rate = crawler.settings.get('BLOOM_ERROR_RATE')
+            capacity = crawler.settings.get('BLOOM_CAPACITY_URL'),
+            error_rate = crawler.settings.get('BLOOM_ERROR_RATE_URL')
         )
 
     def process_request(self,request,spider):

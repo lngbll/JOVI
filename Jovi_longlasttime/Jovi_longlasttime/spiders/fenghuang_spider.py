@@ -135,6 +135,7 @@ class FenghuangSpiderSpider(scrapy.Spider):
     meta = dict()
     json_request_pattern = 'http://shankapi.ifeng.com/shanklist/_/getColumnInfo/_/default/{}/{}/20/{}'
     custom_settings = {
+        'LOG_LEVEL':'INFO',
         'LOG_FILE': '{}\\{}.log'.format(log_dir, date),
         'REDIRECT_ENABLED':False
     }
@@ -155,13 +156,14 @@ class FenghuangSpiderSpider(scrapy.Spider):
         meta = response.meta
         nav = response.xpath('//div[@class="fl main"]//a | //div[@id="box_content"]//h2/a | //div[@class="box650"]//h2/a | //div[@class="zx_list"]//h1/a')
         next_page = response.xpath('//a[contains(text(),"下一页")]')
-        if next_page:
-            next_request_url = next_page.xpath('@href').extract_first()
-            yield scrapy.Request(url=next_request_url,callback=self.get_html_url,meta=meta,dont_filter=True)
         for i in nav:
             meta['title'] = i.xpath('text()').extract_first().strip()
             url = i.xpath('@href').extract_first()
-            yield scrapy.Request(url=url, callback=self.get_content, meta=meta,dont_filter=True)
+            yield scrapy.Request(url=url, callback=self.get_content, meta=meta, dont_filter=True)
+        if next_page:
+            next_request_url = next_page.xpath('@href').extract_first()
+            yield scrapy.Request(url=next_request_url,callback=self.get_html_url,meta=meta)
+
 
     # 解析javascript方式的urls
     def get_str_url(self,response):

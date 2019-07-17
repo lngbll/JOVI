@@ -1,6 +1,6 @@
 #!coding=utf-8
 import json
-import re,os
+import re
 
 import redis
 import requests
@@ -12,7 +12,6 @@ import execjs.runtime_names
 
 class toutiao(object):
     def __init__(self, url):
-
         self.url = url
         self.s = requests.session()
         headers = {'Accept': '*/*',
@@ -32,7 +31,7 @@ class toutiao(object):
         max_behot_time = '0'
         self.s.headers.update(headers)
         source_url = []
-        for i in range(0, 30):  ##获取页数
+        for _ in range(0, 50):  ##获取页数
             Honey = json.loads(self.get_js())
             eas = Honey['as']
             ecp = Honey['cp']
@@ -57,7 +56,7 @@ class toutiao(object):
         return source_url
 
     def get_js(self):
-        f = open(r"E:\Jovi新闻项目\Jovi_longlasttime\Jovi_longlasttime\signature.js", 'r', encoding='UTF-8')
+        f = open(r"E:\JOVI\Jovi_longlasttime\Jovi_longlasttime\signature.js", 'r', encoding='UTF-8')
         htmlstr = f.read()
         ctx = execjs.compile(htmlstr)
         return ctx.call('get_as_cp_signature')

@@ -32,14 +32,14 @@ DOWNLOADER_MIDDLEWARES = {
 
 ITEM_PIPELINES = {
     'Jovi_longlasttime.pipelines.BloomFilterPipeline': 200,
-    'Jovi_longlasttime.pipelines.Duppipline': 300,
+    'Jovi_longlasttime.pipelines.Duppipline': 100,
     # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源
-    'Jovi_longlasttime.pipelines.To_csv': 500
+    'Jovi_longlasttime.pipelines.To_csv': 500 #三级文件夹
 }
 
 LOG_ENABLED = True
 # LOG_FILE = None #日志文件有专门的日志文件夹，每个spider分别存储
-LOG_LEVEL = 'ERROR'
+LOG_LEVEL = 'INFO'
 LOG_ENCODING = 'utf-8'
 date = time.strftime('%Y-%m-%d',time.localtime())
 
@@ -62,6 +62,8 @@ counter = dict()
 #bloomfilter settings,一旦设置不可随便更改
 BLOOM_CAPACITY = 100000000
 BLOOM_ERROR_RATE = 0.00001
+BLOOM_CAPACITY_URL = 1000000000
+BLOOM_ERROR_RATE_URL = 0.00001
 
 
 REDIRECT_ENABLED = True
