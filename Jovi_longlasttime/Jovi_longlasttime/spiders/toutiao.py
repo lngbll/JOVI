@@ -2,12 +2,10 @@
 import json
 import re
 
-import redis
-import requests
-
-
 import execjs
 import execjs.runtime_names
+import redis
+import requests
 
 
 class toutiao(object):
@@ -43,7 +41,7 @@ class toutiao(object):
                 req = self.s.get(url=url, verify=False)
                 j = json.loads(req.text)
                 data = j['data']
-                if data!=[]:
+                if data != []:
                     break
             for k in range(0, 10):
                 try:
@@ -79,4 +77,3 @@ if __name__ == '__main__':
         tt.closes()
         for j in t:
             r.sadd('toutiao', j)
-

@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
-import scrapy
-import time
 import re
+import time
 from urllib.parse import urlparse
 
+import scrapy
+
 from Jovi_longlasttime.items import JoviLonglasttimeItem
+
+
 class RenmingwangSpiderSpider(scrapy.Spider):
     name = 'renmingwang_spider'
     # allowed_domains = ['www.rengming.com']
@@ -12,21 +15,21 @@ class RenmingwangSpiderSpider(scrapy.Spider):
     date = time.strftime('%Y-%m-%d', time.localtime())
     log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\人民网'
     custom_settings = {
-        "ITEM_PIPELINES":{
-            'Jovi_longlasttime.pipelines.Duppipline':100,
-            'Jovi_longlasttime.pipelines.BloomFilterPipeline':200,
+        "ITEM_PIPELINES": {
+            'Jovi_longlasttime.pipelines.Duppipline': 100,
+            'Jovi_longlasttime.pipelines.BloomFilterPipeline': 200,
             'Jovi_longlasttime.pipelines.To_csv1': 500
         },
-        'DOWNLOADER_MIDDLEWARES':{},
+        'DOWNLOADER_MIDDLEWARES': {},
         # 'LOG_LEVEL':'DEBUG',
-        # 'LOG_FILE':'{}\{}.json'.format(log_dir,date)
+        'LOG_FILE': '{}\{}.json'.format(log_dir, date)
     }
 
     channels = {
-        'hn.people.com.cn':'国内',
-        'it.people.com.cn':'IT',
-        'gx.people.com.cn':'国内',
-        'ah.people.com.cn':'国内',
+        'hn.people.com.cn': '国内',
+        'it.people.com.cn': 'IT',
+        'gx.people.com.cn': '国内',
+        'ah.people.com.cn': '国内',
         'art.people.com.cn': '书画',
         'auto.people.com.cn': '汽车',
         'bj.people.com.cn': '国内',
@@ -73,7 +76,7 @@ class RenmingwangSpiderSpider(scrapy.Spider):
         'opinion.people.com.cn': '观点',
         'picchina.people.com.cn': '图说中国',
         'politics.people.com.cn': '时政',
-        'qh.people.com.cn':'国内',
+        'qh.people.com.cn': '国内',
         'renshi.people.com.cn': '时政',
         'ru.people.com.cn': '国际',
         'sc.people.com.cn': '国内',
@@ -83,7 +86,7 @@ class RenmingwangSpiderSpider(scrapy.Spider):
         'shipin.people.com.cn': '食品',
         'sn.people.com.cn': '国内',
         'society.people.com.cn': '社会',
-        'sports.people.com.cn':'体育',
+        'sports.people.com.cn': '体育',
         'sx.people.com.cn': '国内',
         'sz.people.com.cn': '国内',
         'tc.people.com.cn': '通信',
@@ -98,22 +101,22 @@ class RenmingwangSpiderSpider(scrapy.Spider):
         'www.womenvoice.cn': '女性',
         'xj.people.com.cn': '国内',
         'xz.people.com.cn': '国内',
-        'yn.people.com.cn':'国内',
+        'yn.people.com.cn': '国内',
         'yuqing.people.com.cn': '舆情',
         'zj.people.com.cn': '国内',
     }
 
-    def parse(self,response):
-        urls = re.findall(r'<loc>(.*?)</loc>',response.text)
+    def parse(self, response):
+        urls = re.findall(r'<loc>(.*?)</loc>', response.text)
         for i in urls:
-            yield scrapy.Request(url=i,callback=self.get_url_list,)
+            yield scrapy.Request(url=i, callback=self.get_url_list, )
 
-    def get_url_list(self,response):
-        urls = re.findall(r'<loc>(.*?)</loc>',response.text)
+    def get_url_list(self, response):
+        urls = re.findall(r'<loc>(.*?)</loc>', response.text)
         for i in urls:
-            yield scrapy.Request(url=i,callback=self.get_content,)
+            yield scrapy.Request(url=i, callback=self.get_content, )
 
-    def get_content(self,response):
+    def get_content(self, response):
         item = JoviLonglasttimeItem()
         item['article_url'] = response.url
         item['first_tag'] = '人民网'
@@ -129,7 +132,5 @@ class RenmingwangSpiderSpider(scrapy.Spider):
                 '//*[@class="text width978 clearfix"]//p//text() |' \
                 '//*[@id="zoom"]//p//text() |' \
                 '//*[@class="text_show"]//p//text()'
-        item['article_content'] = ''.join(map((lambda x:x.strip()),response.xpath(xpath).getall()))
+        item['article_content'] = ''.join(map((lambda x: x.strip()), response.xpath(xpath).getall()))
         yield item
-
-

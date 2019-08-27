@@ -3,14 +3,13 @@ import uuid
 
 import pymmh3
 
-
 __all__ = ['BloomFilter']
 
 
 class BloomFilter(object):
 
     def __init__(self, redis, capacity=100000, error_rate=0.001,
-                 redis_key: str=None):
+                 redis_key: str = None):
         """Implements a space-efficient probabilistic data structure
 
         :param redis: aioredis connection object
@@ -35,7 +34,7 @@ class BloomFilter(object):
         # bloom filter settings
         self._filter_size, self._hash_funcs = self.optimal_bloom_filter(
             self._capacity, self._error_rate)
-        self._bits_per_slice = int(self._filter_size/self._hash_funcs)
+        self._bits_per_slice = int(self._filter_size / self._hash_funcs)
 
     @property
     def redis_key(self):

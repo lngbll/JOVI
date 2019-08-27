@@ -2,7 +2,9 @@
 import json
 import re
 import time
+
 import scrapy
+
 from Jovi_longlasttime.items import JoviLonglasttimeItem
 
 
@@ -19,7 +21,7 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
         '军事': {'军事': 'junshi'},
         '社会': {'社会': 'shehui'},
         '娱乐': {'电视': 'dianshi',
-               '电影':'dianying',
+               '电影': 'dianying',
                '综艺': 'zongyi',
                '八卦': 'bagua',
                },
@@ -27,10 +29,10 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
                '互联网': 'hulianwang',
                '数码': 'shuma',
                '区块链': 'qukuailian',
-              },
+               },
         '体育': {'NBA': 'nba',
-                'CBA':'cba',
-                '德甲': 'dejia',
+               'CBA': 'cba',
+               '德甲': 'dejia',
                '意甲': 'yijia',
                '中超': 'zhongchao',
                '西甲': 'xijia',
@@ -46,12 +48,12 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
                '期货': 'qihuo',
                '理财': 'licai', },
         '汽车': {'汽车': 'qiche'},
-        '健康': { '保健': 'baojian',
-                '健身': 'jianshen',
-                '心理': 'xinli',
-                '饮食': 'yinshi',
-                '减肥': 'jianfei',
-                },
+        '健康': {'保健': 'baojian',
+               '健身': 'jianshen',
+               '心理': 'xinli',
+               '饮食': 'yinshi',
+               '减肥': 'jianfei',
+               },
         '国内': {'国内': 'guonei'},
         '国际': {'国际': 'guoji'},
         '时尚': {'时尚': 'shishang'},
@@ -63,8 +65,8 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
     }
     custom_settings = {
 
-        'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
-        'DOWNLOAD_DELAY':0.5,
+        'LOG_FILE': '{}\\{}.log'.format(log_dir, date),
+        'DOWNLOAD_DELAY': 0.5,
         'DOWNLOADER_MIDDLEWARES': {
             # 'Jovi_longlasttime.middlewares.ProxyMiddleware':300,
             'Jovi_longlasttime.middlewares.UaMiddleware': 400,
@@ -79,7 +81,7 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
         'second_tag': '',
         'third_tag': '',
         'page_num': 1,
-        'idx':0,
+        'idx': 0,
         'source': '',
         'type': '',
         'title': '',
@@ -95,9 +97,10 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
                 type = self.cate[i][j]
                 meta['type'] = type
                 ts = int(time.time() * 1000)
-                url = 'https://pcflow.dftoutiao.com/toutiaopc_jrtt/newspool?type={}&uid=15439146142732770&startkey=||||&newkey=|&pgnum=1%idx=0&_={}'.format(type,meta[
-                    'page_num'], ts)
-                yield scrapy.Request(url=url, callback=self.get_url,headers=self.headers, meta=meta,dont_filter=True)
+                url = 'https://pcflow.dftoutiao.com/toutiaopc_jrtt/newspool?type={}&uid=15439146142732770&startkey=||||&newkey=|&pgnum=1%idx=0&_={}'.format(
+                    type, meta[
+                        'page_num'], ts)
+                yield scrapy.Request(url=url, callback=self.get_url, headers=self.headers, meta=meta, dont_filter=True)
 
     def get_url(self, response):
         meta = response.meta
@@ -108,15 +111,16 @@ class DongfangtoutiaoSpiderSpider(scrapy.Spider):
                 url = i['url']
                 meta['source'] = i['source']
                 meta['title'] = i['topic'].strip()
-                yield scrapy.Request(url=url, callback=self.get_content, meta=meta,dont_filter=True)
+                yield scrapy.Request(url=url, callback=self.get_content, meta=meta, dont_filter=True)
             startkey = res['endkey']
             newkey = res['newkey']
             column = len(res['data'])
-            meta['idx']+=column
+            meta['idx'] += column
             ts = int(time.time() * 1000)
-            next_page = 'https://pcflow.dftoutiao.com/toutiaopc_jrtt/newspool?type={}&uid=15439146142732770&startkey={}&newkey={}&pgnum={}&_={}'.format(meta['type'],startkey,newkey,meta[
+            next_page = 'https://pcflow.dftoutiao.com/toutiaopc_jrtt/newspool?type={}&uid=15439146142732770&startkey={}&newkey={}&pgnum={}&_={}'.format(
+                meta['type'], startkey, newkey, meta[
                     'page_num'], ts)
-            yield scrapy.Request(url=next_page, callback=self.get_url, meta=meta,dont_filter=True)
+            yield scrapy.Request(url=next_page, callback=self.get_url, meta=meta, dont_filter=True)
 
     def get_content(self, response):
         meta = response.meta

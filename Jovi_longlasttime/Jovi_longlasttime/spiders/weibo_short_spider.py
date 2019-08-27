@@ -177,8 +177,9 @@ class weibo_short_spider(object):
                     for i in urls:
                         self.get_content(i, k, r)
                     page += 1
+                    time.sleep(1)
                 except Exception:
-                    logging.error('ip被禁',exc_info=True)
+                    logging.error('ip被禁',exc_info=False)
                     print('被禁IP,等待10分钟......')
 
 

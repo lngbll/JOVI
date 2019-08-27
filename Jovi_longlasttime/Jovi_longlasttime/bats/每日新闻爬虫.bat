@@ -15,6 +15,5 @@ scrapy crawl 163spider
 scrapy crawl tencent_new_spider
 scrapy crawl Zaker_spider
 scrapy crawl dongfangtoutiao_spider
-scrapy crawl autoHome_spider
 pause
 

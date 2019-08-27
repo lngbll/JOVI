@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 import json
 import re
-import scrapy
-from Jovi_longlasttime.items import JoviLonglasttimeItem
 import time
+
+import scrapy
+
+from Jovi_longlasttime.items import JoviLonglasttimeItem
 
 
 class SinaSpiderSpider(scrapy.Spider):
@@ -21,7 +23,7 @@ class SinaSpiderSpider(scrapy.Spider):
         'title': ''
     }
     custom_settings = {
-        'LOG_FILE':'{}\\{}.log'.format(log_dir,date)
+        'LOG_FILE': '{}\\{}.log'.format(log_dir, date)
     }
 
     def parse(self, response):
@@ -76,7 +78,8 @@ class SinaSpiderSpider(scrapy.Spider):
     def get_content(self, response):
         meta = response.meta
         if response.body != b'':
-            contents = response.xpath('//article/p//text()|//section[@class="art_pic_card art_content"]/p//text()|//div[@class="article"]/p//text()').extract()
+            contents = response.xpath(
+                '//article/p//text()|//section[@class="art_pic_card art_content"]/p//text()|//div[@class="article"]/p//text()').extract()
             content = ''
             for i in contents:
                 if re.search('原标题：|图片来自|图片来源|文章转自|文章来自|本文来源|本文来自|作者：|微信公众号|更多信息请关注|来源：|如有侵权|点击进入专题|作者署名|本文是|ID：|✎|文\|',

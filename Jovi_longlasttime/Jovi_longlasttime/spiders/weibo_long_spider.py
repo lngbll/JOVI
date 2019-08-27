@@ -1,18 +1,16 @@
 import json
 import logging
 import os
-import random
 import re
-import sys
 
 import redis
 import requests
 from lxml import etree
-from scrapy import Selector
 from requests import exceptions
-from Jovi_longlasttime.tools.bloomfilter import BloomFilter
-from Jovi_longlasttime.settings import *
+from scrapy import Selector
 
+from Jovi_longlasttime.settings import *
+from Jovi_longlasttime.tools.bloomfilter import BloomFilter
 
 
 class WeiBoLongSpider(object):
@@ -37,7 +35,8 @@ class WeiBoLongSpider(object):
             os.mkdir(self.dir)
             os.chdir(self.dir)
         self.r = redis.Redis(host='localhost', port=6379, db=1)
-        self.bloomFilter = BloomFilter(redis=self.r,capacity=BLOOM_CAPACITY,error_rate=BLOOM_ERROR_RATE,redis_key='JOVI_ARTICLES')
+        self.bloomFilter = BloomFilter(redis=self.r, capacity=BLOOM_CAPACITY, error_rate=BLOOM_ERROR_RATE,
+                                       redis_key='JOVI_ARTICLES')
         self.cookies = self.r.get('cookies')
         self.channels = {
             '军事': '623751_4',
@@ -102,7 +101,7 @@ class WeiBoLongSpider(object):
             dom = etree.HTML(html)
             return dom
         except Exception as e:
-            self.logger.error('出现异常', exc_info=True)
+            self.logger.exception(e)
 
     def get_content(self, url, k):
         global counter
@@ -165,7 +164,7 @@ class WeiBoLongSpider(object):
                     try:
                         for i in urls:
                             self.get_content(i, k)
-                            time.sleep(0.5 * random.random())
+                            time.sleep(1)
                     except Exception:
                         self.logger.error('出现异常', exc_info=True)
                 page += 1

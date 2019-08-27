@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 import json
 import re
+import time
 from urllib.parse import urlparse
 
 import scrapy
 from scrapy.log import logger
+
 from Jovi_longlasttime.items import JoviLonglasttimeItem
-import time
 
 
 class ZakerSpiderSpider(scrapy.Spider):
@@ -16,9 +17,9 @@ class ZakerSpiderSpider(scrapy.Spider):
     allowed_domains = ['www.myzaker.com']
     start_urls = ['http://www.myzaker.com/']
     xpath = {
-        'h5.ifeng.com':{
-            'title':'//div[@class="tpl_header_title"]//text()',
-            'ps':'//div[@class="tpl_main"]//p//text()'
+        'h5.ifeng.com': {
+            'title': '//div[@class="tpl_header_title"]//text()',
+            'ps': '//div[@class="tpl_main"]//p//text()'
         },
         'mobile2.itanzi.com': {
             'title': '//*[@class="post-title"]//text()',
@@ -33,8 +34,8 @@ class ZakerSpiderSpider(scrapy.Spider):
             'ps': '//article/*[@class="entry-content"]//p//text() | //*[@class="entry-content"]//p//text()'
         },
         'm.vogue.com.cn': {
-            'title':'//div[@class="tpl_header_title"]//text()',
-            'ps':'//div[@class="tpl_main"]//p//text()'
+            'title': '//div[@class="tpl_header_title"]//text()',
+            'ps': '//div[@class="tpl_main"]//p//text()'
         },
         'www.stylemode.com': {
             'title': '//article//h1/text()',
@@ -64,17 +65,17 @@ class ZakerSpiderSpider(scrapy.Spider):
             'title': '//*[@class="article_header"]/h1/text()',
             'ps': '//*[@id="content"]//p//text()'
         },
-        'rss1.thehour.cn':{
-            'title':'//*[@class="tpl_header_title"]/text()',
-            'ps':'//*[@class="tpl_main"]//p//text()'
+        'rss1.thehour.cn': {
+            'title': '//*[@class="tpl_header_title"]/text()',
+            'ps': '//*[@class="tpl_main"]//p//text()'
         },
         'news.qq.com': {
             'title': '//*[@class="hd"]/h1/text()',
             'ps': '//*[@id="Cnt-Main-Article-QQ"]//p//text()'
         },
-        'www.xiachufang.com':{
-            'title':'//*[@class="page-title"]/text()',
-            'ps':'//*[@class="block recipe-show"]//text()'
+        'www.xiachufang.com': {
+            'title': '//*[@class="page-title"]/text()',
+            'ps': '//*[@class="block recipe-show"]//text()'
         },
         'www.haibao.com': {
             'title': '//*[@id="jsArticleTitle"]/text()',
@@ -92,13 +93,13 @@ class ZakerSpiderSpider(scrapy.Spider):
             'title': '//*[@class="articleHead"]/h1/text()',
             'ps': '//*[@class="articleText"]//p//text()'
         },
-        'dress.pclady.com.cn':{
-            'title':'//*[@class="artCon"]/h1/text()',
-            'ps':'//*[@id="artText"]//p//text()'
+        'dress.pclady.com.cn': {
+            'title': '//*[@class="artCon"]/h1/text()',
+            'ps': '//*[@id="artText"]//p//text()'
         },
-        'xw.qq.com':{
-            'title':'//*[@class="tpl_header_title"]/text()',
-            'ps':'//*[@id="con"]//p//text()'
+        'xw.qq.com': {
+            'title': '//*[@class="tpl_header_title"]/text()',
+            'ps': '//*[@id="con"]//p//text()'
         }
     }
     meta = {
@@ -110,34 +111,32 @@ class ZakerSpiderSpider(scrapy.Spider):
 
     }
     custom_settings = {
-        'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
+        'LOG_FILE': '{}\\{}.log'.format(log_dir, date),
         'ITEM_PIPELINES': {
             'Jovi_longlasttime.pipelines.BloomFilterPipeline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,
             # # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源
             'Jovi_longlasttime.pipelines.To_csv1': 500
         },
-        'DOWNLOAD_DELAY':0.5
+        'DOWNLOAD_DELAY': 0.5
     }
 
-
-    def parse(self,response):
+    def parse(self, response):
         meta = self.meta
         second_tag_node = response.xpath('//div[@class="nav"]/a | //div[@class="nav_menu"]/a')
         for i in second_tag_node:
             meta['second_tag'] = i.xpath('text()').extract_first().strip()
             url = i.xpath('@href').extract_first()
-            yield scrapy.Request(url='http:'+url,meta=meta,callback=self.get_first_page)
+            yield scrapy.Request(url='http:' + url, meta=meta, callback=self.get_first_page)
 
-
-    def get_first_page(self,response):
+    def get_first_page(self, response):
         meta = response.meta
         article_urls = response.xpath('//div[@id="section"]//a/@href').extract_first()
         for i in article_urls:
-            yield scrapy.Request('http:'+i,meta=meta,callback=self.get_content)
+            yield scrapy.Request('http:' + i, meta=meta, callback=self.get_content)
         first_page = response.xpath('//input[@id="nexturl"]/@value').extract_first()
-        url = 'http:'+first_page
-        yield scrapy.Request(url,meta=meta,callback=self.get_url)
+        url = 'http:' + first_page
+        yield scrapy.Request(url, meta=meta, callback=self.get_url)
 
     def get_url(self, response):
         meta = response.meta
@@ -151,7 +150,6 @@ class ZakerSpiderSpider(scrapy.Spider):
                 yield scrapy.Request(url='http:' + data['data']['next_url'], callback=self.get_url, meta=meta)
         except KeyError:
             print('网页格式有变化，注意更改脚本')
-
 
     def get_content(self, response):
         meta = response.meta
@@ -170,11 +168,13 @@ class ZakerSpiderSpider(scrapy.Spider):
             return
         content = ''
         for p in ps:
-            if re.search(r'责任编辑：|作者：|出处：|{}|来自：|来源 :|来源：|来源 : |图片来自|图片由|图：|更多精彩|请投稿至：|文|文／|编辑',p):
+            if re.search(r'责任编辑：|作者：|出处：|{}|来自：|来源 :|来源：|来源 : |图片来自|图片由|图：|更多精彩|请投稿至：|文|文／|编辑', p):
                 continue
             elif re.search(r'关注微信公众号|参考资料|声明：|原网页已经由 ZAKER 转码排版 |推荐阅读', p):
                 break
             else:
                 content += p.strip()
-        item['article_content'] = content.replace('\n', '').replace('\r', '').replace('\t', '').replace('\u3000','').replace('\xa0', '')
+        item['article_content'] = content.replace('\n', '').replace('\r', '').replace('\t', '').replace('\u3000',
+                                                                                                        '').replace(
+            '\xa0', '')
         yield item

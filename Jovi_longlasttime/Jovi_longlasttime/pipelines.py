@@ -2,34 +2,38 @@
 
 import os
 from hashlib import sha224
+
 import pymongo
 import redis
 from scrapy.exceptions import DropItem
+
 from .tools.bloomfilter import BloomFilter
 
+
 class BloomFilterPipeline(object):
-    def __init__(self,host,port,db,capacity,error_rate):
-        self.redis = redis.StrictRedis(host=host,port=port,db=db)
-        self.bloomfilter_articles = BloomFilter(self.redis,capacity=capacity,error_rate=error_rate,redis_key='JOVI_ARTICLES')
-        self.bloomfilter_urls = BloomFilter(self.redis,capacity=capacity,error_rate=error_rate,redis_key='JOVI_URLS')
+    def __init__(self, host, port, db, capacity, error_rate):
+        self.redis = redis.StrictRedis(host=host, port=port, db=db)
+        self.bloomfilter_articles = BloomFilter(self.redis, capacity=capacity, error_rate=error_rate,
+                                                redis_key='JOVI_ARTICLES')
+        self.bloomfilter_urls = BloomFilter(self.redis, capacity=capacity, error_rate=error_rate, redis_key='JOVI_URLS')
 
     @classmethod
-    def from_crawler(cls,crawler):
-        return cls(host = crawler.settings.get('REDIS_HOST'),
-                   port = crawler.settings.get('REDIS_PORT'),
-                   db = crawler.settings.get('REDIS_DB'),
-                   capacity = crawler.settings.get('BLOOM_CAPACITY'),
+    def from_crawler(cls, crawler):
+        return cls(host=crawler.settings.get('REDIS_HOST'),
+                   port=crawler.settings.get('REDIS_PORT'),
+                   db=crawler.settings.get('REDIS_DB'),
+                   capacity=crawler.settings.get('BLOOM_CAPACITY'),
                    error_rate=crawler.settings.get('BLOOM_ERROR_RATE'),
                    )
 
-
-    def process_item(self,item,spider):
+    def process_item(self, item, spider):
         self.bloomfilter_urls.add(item['article_url'])
         if self.bloomfilter_articles.contains(item['article_title']):
             raise DropItem('文章已经存在')
         else:
             self.bloomfilter_articles.add(item['article_title'])
             return item
+
 
 class Duppipline(object):
     def process_item(self, item, spider):
@@ -158,14 +162,12 @@ class To_csv(object):
     #                 f.write(lines)
 
 
-
-
 # 对于只有二级标签的spider,使用这个pipeline
 class To_csv1(object):
     def __init__(self, stats, START_DIR):
         self.stats = stats
         self.START_DIR = START_DIR
-        self.stats.set_value('*总数',0)
+        self.stats.set_value('*总数', 0)
         if os.path.exists(self.START_DIR):
             os.chdir(self.START_DIR)
         else:
@@ -176,7 +178,7 @@ class To_csv1(object):
     def from_crawler(cls, crawler):
         return cls(
             START_DIR=crawler.settings.get('START_DIR'),
-            stats = crawler.stats
+            stats=crawler.stats
         )
 
     def process_item(self, item, spider):
@@ -185,17 +187,17 @@ class To_csv1(object):
         if os.path.exists('%s\%s' % (self.START_DIR, first_tag)):
             os.chdir('%s\%s' % (self.START_DIR, first_tag))
         else:
-            self.stats.set_value('*'+second_tag,0)
+            self.stats.set_value('*' + second_tag, 0)
             os.mkdir('%s\%s' % (self.START_DIR, first_tag))
             os.chdir('%s\%s' % (self.START_DIR, first_tag))
         with open(second_tag + ".txt", 'a', encoding='utf-8') as file:
             file.write((item['article_title'] + "," + item['article_content'] + '\n'))
             print(item['article_title'] + "," + item['article_content'][:150] + '\n')
-            self.stats.inc_value('*'+second_tag)
+            self.stats.inc_value('*' + second_tag)
             self.stats.inc_value('*总数')
         return item
 
-    def close_spider(self,spider):
+    def close_spider(self, spider):
         pass
         # os.chdir('e:\\统计')
         # name = spider.__class__.__name__

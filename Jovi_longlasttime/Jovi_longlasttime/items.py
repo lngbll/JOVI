@@ -6,7 +6,8 @@
 # https://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
-from scrapy.item import DictItem,Field
+from scrapy.item import DictItem, Field
+
 
 class JoviLonglasttimeItem(scrapy.Item):
     # define the fields for your item here like:
@@ -32,6 +33,7 @@ class BlogItem(scrapy.Item):
     intro = scrapy.Field()
     address = scrapy.Field()
 
-def create_item_class(class_name,field_list):
-    fields = {field_name:Field() for field_name in field_list}
-    return type(class_name,(DictItem,),{'fields':fields})
+
+def create_item_class(class_name, field_list):
+    fields = {field_name: Field() for field_name in field_list}
+    return type(class_name, (DictItem,), {'fields': fields})

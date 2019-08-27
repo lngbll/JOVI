@@ -3,8 +3,10 @@ import json
 import re
 import time
 from datetime import datetime
+
 import scrapy
 from lxml import etree
+
 from Jovi_longlasttime.items import JoviLonglasttimeItem
 
 
@@ -31,7 +33,7 @@ class UcSpider(scrapy.Spider):
     }
     no_parse = ['图片', '视频', '趣图', '摄影', '精品', '推荐']
     custom_settings = {
-        'ITEM_PIPELINES':{
+        'ITEM_PIPELINES': {
             'Jovi_longlasttime.pipelines.BloomFilterPipeline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,
             # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源
@@ -102,8 +104,9 @@ class UcSpider(scrapy.Spider):
                     continue
                 else:
                     article_content += i.strip()
-            item['article_content'] = article_content.replace('\r', '').replace('\n', '').replace('\t', '').replace('\xa0',
-                                                                                                                    '').replace(
+            item['article_content'] = article_content.replace('\r', '').replace('\n', '').replace('\t', '').replace(
+                '\xa0',
+                '').replace(
                 '\u3000', '')
             item['first_tag'] = 'UC头条'
             item['second_tag'] = meta['third_tag']

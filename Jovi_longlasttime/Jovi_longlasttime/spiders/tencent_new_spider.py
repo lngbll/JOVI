@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import json
 import re
+import time
 
 import scrapy
 
 from Jovi_longlasttime.items import JoviLonglasttimeItem
-import time
 
 
 class TencentNewSpiderSpider(scrapy.Spider):
@@ -13,7 +13,7 @@ class TencentNewSpiderSpider(scrapy.Spider):
     log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\tengxun_spider'
     date = time.strftime('%Y-%m-%d', time.localtime())
     # allowed_domains = ['www.qq.com']
-    custom_settings = {'LOG_FILE':'{}\\{}.log'.format(log_dir,date)}
+    custom_settings = {'LOG_FILE': '{}\\{}.log'.format(log_dir, date)}
     start_urls = ['http://www.qq.com/']
     ext = {
         '军事': 'milite',

@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
-import scrapy
 import json
 import re
 import time
+
+import scrapy
+
 from Jovi_longlasttime.items import JoviLonglasttimeItem
+
 """
 手机版凤凰网内容太少，还是爬网页版
 """
@@ -14,7 +17,6 @@ class FenghuangSpiderSpider(scrapy.Spider):
 
     log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\fenghuang_spider'
     date = time.strftime('%Y-%m-%d', time.localtime())
-
 
     allowed_domains = ['www.ifeng.com']
     start_urls = ['http://www.ifeng.com/']
@@ -135,26 +137,27 @@ class FenghuangSpiderSpider(scrapy.Spider):
     meta = dict()
     json_request_pattern = 'http://shankapi.ifeng.com/shanklist/_/getColumnInfo/_/default/{}/{}/20/{}'
     custom_settings = {
-        'LOG_LEVEL':'INFO',
+        'LOG_LEVEL': 'INFO',
         'LOG_FILE': '{}\\{}.log'.format(log_dir, date),
-        'REDIRECT_ENABLED':False
+        'REDIRECT_ENABLED': False
     }
 
     def start_requests(self):
         meta = self.meta
-        for j,k in self.channels.items():
+        for j, k in self.channels.items():
             meta['second_tag'] = j
-            for m,n in k.items():
+            for m, n in k.items():
                 meta['third_tag'] = m
                 if 'listpage' not in n:
-                    yield scrapy.Request(url=n,callback=self.get_str_url,meta=meta)
+                    yield scrapy.Request(url=n, callback=self.get_str_url, meta=meta)
                 else:
-                    yield scrapy.Request(url=n,callback=self.get_html_url,meta=meta)
+                    yield scrapy.Request(url=n, callback=self.get_html_url, meta=meta)
 
     # 解析以html形式的urls
-    def get_html_url(self,response):
+    def get_html_url(self, response):
         meta = response.meta
-        nav = response.xpath('//div[@class="fl main"]//a | //div[@id="box_content"]//h2/a | //div[@class="box650"]//h2/a | //div[@class="zx_list"]//h1/a')
+        nav = response.xpath(
+            '//div[@class="fl main"]//a | //div[@id="box_content"]//h2/a | //div[@class="box650"]//h2/a | //div[@class="zx_list"]//h1/a')
         next_page = response.xpath('//a[contains(text(),"下一页")]')
         for i in nav:
             meta['title'] = i.xpath('text()').extract_first().strip()
@@ -162,54 +165,53 @@ class FenghuangSpiderSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.get_content, meta=meta, dont_filter=True)
         if next_page:
             next_request_url = next_page.xpath('@href').extract_first()
-            yield scrapy.Request(url=next_request_url,callback=self.get_html_url,meta=meta)
-
+            yield scrapy.Request(url=next_request_url, callback=self.get_html_url, meta=meta)
 
     # 解析javascript方式的urls
-    def get_str_url(self,response):
+    def get_str_url(self, response):
         meta = response.meta
-        allData = re.search('var allData = (.*?);\n',response.text).group(1)
+        allData = re.search('var allData = (.*?);\n', response.text).group(1)
         data = json.loads(allData)
         columnId = data['columnId']
         meta['columnId'] = columnId
         newsstream = data['newsstream']
         next_request_id = newsstream[-1]['id']
-        next_request_tp = 1000*time.mktime(time.strptime(newsstream[-1]['newsTime'],"%Y-%m-%d %H:%M:%S"))
-        next_request = self.json_request_pattern.format(next_request_id,next_request_tp,columnId)
+        next_request_tp = 1000 * time.mktime(time.strptime(newsstream[-1]['newsTime'], "%Y-%m-%d %H:%M:%S"))
+        next_request = self.json_request_pattern.format(next_request_id, next_request_tp, columnId)
         isEnd = data['isEnd']
         if not isEnd:
-            yield scrapy.Request(url=next_request,callback=self.get_json_url,meta=meta,dont_filter=True)
+            yield scrapy.Request(url=next_request, callback=self.get_json_url, meta=meta, dont_filter=True)
         for news in newsstream:
             meta['title'] = news['title']
             url = news['url']
-            yield scrapy.Request(url=url,callback=self.get_content,meta=meta,dont_filter=True)
+            yield scrapy.Request(url=url, callback=self.get_content, meta=meta, dont_filter=True)
 
     # 解析json形式的urls
-    def get_json_url(self,response):
+    def get_json_url(self, response):
         meta = response.meta
         allData = json.loads(response.text)
         data = allData['data']
         isEnd = data['isEnd']
-        newsstream= data['newsstream']
+        newsstream = data['newsstream']
         next_request_id = newsstream[-1]['id']
         next_request_tp = 1000 * time.mktime(time.strptime(newsstream[-1]['newsTime'], "%Y-%m-%d %H:%M:%S"))
         columnId = meta['columnId']
         next_request = self.json_request_pattern.format(next_request_id, next_request_tp, columnId)
         if not isEnd:
-            yield scrapy.Request(url=next_request,callback=self.get_json_url,meta=meta,dont_filter=True)
+            yield scrapy.Request(url=next_request, callback=self.get_json_url, meta=meta, dont_filter=True)
         for news in newsstream:
             type = news['type']
             meta['title'] = news['title']
             url = news['url']
             if type == 'article':
-                yield scrapy.Request(url=url, callback=self.get_content, meta=meta,dont_filter=True)
+                yield scrapy.Request(url=url, callback=self.get_content, meta=meta, dont_filter=True)
 
-    def get_content(self,response):
+    def get_content(self, response):
         meta = response.meta
         item = JoviLonglasttimeItem()
         pattern = r'http[s]*://[\S]+.ifeng.com/a/[\d]{8}/[\d]+_0.[s]*html'
         # 两种形式的url,提取规则不一样
-        if re.search(pattern,response.url):
+        if re.search(pattern, response.url):
             contents = response.xpath('//div[@id="main_content"]/p//text()').extract()
         else:
             try:
@@ -217,7 +219,7 @@ class FenghuangSpiderSpider(scrapy.Spider):
                 allData = json.loads(allData)
                 docData = allData['docData']
                 type = docData['contentData']['contentList'][-1]['type']
-                if type=='text':
+                if type == 'text':
                     contentData = docData['contentData']['contentList'][-1]['data']
                     contents = scrapy.Selector(text=contentData).xpath('//p[not(@class)]//text()').extract()
                 else:
@@ -226,13 +228,13 @@ class FenghuangSpiderSpider(scrapy.Spider):
             except Exception as e:
                 print('可能发生跳转或者没有内容----%s' % response.url)
                 print(e)
-                contents =[]
+                contents = []
         pattern1 = r'编辑：|注：|关注(.*?)公众号|作者:|请关注|微信号：|本文为|未经授权|作者原创|微信公号：|微信ID：|作者简介：|原标题：|记者｜|编辑｜|来源：'
         content = ''
         for i in contents:
-            if re.search(pattern1,i):
+            if re.search(pattern1, i):
                 continue
-            elif re.search(r'- END -|END',i):
+            elif re.search(r'- END -|END', i):
                 break
             else:
                 content += i.strip()
@@ -241,7 +243,7 @@ class FenghuangSpiderSpider(scrapy.Spider):
         item['third_tag'] = meta['third_tag']
         item['article_url'] = response.url
         item['article_title'] = meta['title']
-        item['article_content'] = content.replace('\r','').replace('\n','').replace('\t','').replace('\xa0','').replace('\u3000','')
+        item['article_content'] = content.replace('\r', '').replace('\n', '').replace('\t', '').replace('\xa0',
+                                                                                                        '').replace(
+            '\u3000', '')
         yield item
-
-

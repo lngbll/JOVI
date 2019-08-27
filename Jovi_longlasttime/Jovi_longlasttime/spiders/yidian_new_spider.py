@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 import json
 import re
-import scrapy
-from Jovi_longlasttime.items import JoviLonglasttimeItem
 import time
+
+import scrapy
+
+from Jovi_longlasttime.items import JoviLonglasttimeItem
 
 
 # 内容太少，搁置
@@ -35,7 +37,7 @@ class YidianNewSpiderSpider(scrapy.Spider):
             'Jovi_longlasttime.middlewares.SeleniumMiddleware': 500,
             'Jovi_longlasttime.middlewares.redisMiddleware': 200
         },
-        'ITEM_PIPELINES':{
+        'ITEM_PIPELINES': {
             'Jovi_longlasttime.pipelines.BloomFilterPipeline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,
             # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源
@@ -52,9 +54,9 @@ class YidianNewSpiderSpider(scrapy.Spider):
         cate = file['user_info']['user_channels']
         for i in cate:
             meta['second_tag'] = i['name']
-            if meta['second_tag'] not in ['首页','图片','一点号','比赛','美图','GIF图','段子','游戏','动漫','电台','搞笑']:
+            if meta['second_tag'] not in ['首页', '图片', '一点号', '比赛', '美图', 'GIF图', '段子', '游戏', '动漫', '电台', '搞笑']:
                 url = 'https://www.yidianzixun.com/channel/' + i['fromId']
-                yield scrapy.Request(url=url,callback=self.get_url,meta=meta)
+                yield scrapy.Request(url=url, callback=self.get_url, meta=meta)
 
     def get_url(self, response):
         meta = response.meta

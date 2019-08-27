@@ -21,26 +21,27 @@ from Jovi_longlasttime.Use_agent import UA_LIST
 from .proxy_pool import proxy_pool
 from .tools.bloomfilter import BloomFilter
 
+
 class BloomFilterMiddleware(object):
-    def __init__(self,host,port,db,capacity,error_rate):
-        self.redis = redis.StrictRedis(host,port,db)
-        self.bloomfilter = BloomFilter(redis=self.redis,capacity=capacity,error_rate=error_rate,redis_key='JOVI_URLS')
+    def __init__(self, host, port, db, capacity, error_rate):
+        self.redis = redis.StrictRedis(host, port, db)
+        self.bloomfilter = BloomFilter(redis=self.redis, capacity=capacity, error_rate=error_rate,
+                                       redis_key='JOVI_URLS')
 
     @classmethod
-    def from_crawler(cls,crawler):
+    def from_crawler(cls, crawler):
         return cls(
             host=crawler.settings.get('REDIS_HOST'),
             port=crawler.settings.get('REDIS_PORT'),
             db=crawler.settings.get('REDIS_DB'),
-            capacity = crawler.settings.get('BLOOM_CAPACITY_URL'),
-            error_rate = crawler.settings.get('BLOOM_ERROR_RATE_URL')
+            capacity=crawler.settings.get('BLOOM_CAPACITY_URL'),
+            error_rate=crawler.settings.get('BLOOM_ERROR_RATE_URL')
         )
 
-    def process_request(self,request,spider):
+    def process_request(self, request, spider):
         if self.bloomfilter.contains(request.url):
-            raise IgnoreRequest('已经爬过此url----%s'%request.url)
+            raise IgnoreRequest('已经爬过此url----%s' % request.url)
         return None
-
 
 
 class JoViLongLastTimeSpiderMiddleware(object):
@@ -155,6 +156,7 @@ class SeleniumMiddleware(object):
         # chrome_opt.add_argument('--headless')
         self.browser = webdriver.Chrome(executable_path='D:\浏览器驱动\chromedriver.exe', chrome_options=chrome_opt)
         self.codes = codes
+
     @classmethod
     def from_crawler(cls, crawler):
         return cls(
@@ -225,5 +227,3 @@ class RefererMiddleware(object):
     def process_request(self, request, spider):
         request.headers['Referer'] = 'https://mini.eastday.com'
         return None
-
-

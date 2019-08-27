@@ -14,7 +14,6 @@ class FenghuangNewSpiderSpider(scrapy.Spider):
     log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\fenghuang_new_spider'
     date = time.strftime('%Y-%m-%d', time.localtime())
 
-
     # allowed_domains = ['i.ifeng.com']
     start_urls = ['http://i.ifeng.com/']
     meta = {
@@ -40,13 +39,14 @@ class FenghuangNewSpiderSpider(scrapy.Spider):
 
     custom_settings = {
         'LOG_FILE': '{}\\{}.log'.format(log_dir, date),
-        'ITEM_PIPELINES':{
+        'ITEM_PIPELINES': {
             'Jovi_longlasttime.pipelines.BloomFilterPipeline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,
             # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源
             'Jovi_longlasttime.pipelines.To_csv1': 500
         }
     }
+
     def start_requests(self):
         meta = self.meta
         for k, v in self.api.items():

@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 import json
 import re
+import time
 
 import scrapy
 
 from Jovi_longlasttime.items import JoviLonglasttimeItem
-
-import time
 
 
 class A163spiderSpider(scrapy.Spider):
@@ -112,8 +111,9 @@ class A163spiderSpider(scrapy.Spider):
     }
 
     custom_settings = {
-       'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
+        'LOG_FILE': '{}\\{}.log'.format(log_dir, date),
     }
+
     def start_requests(self):
         meta = self.meta
         for i in self.category.keys():

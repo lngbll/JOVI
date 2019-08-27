@@ -2,14 +2,14 @@
 
 import re
 import time
+
 import scrapy
 
 from Jovi_longlasttime.items import JoviLonglasttimeItem
+
 """
     搜狗微信只保留了一天到两天的内容，因此改成日更新。
 """
-
-
 
 
 class WechatSougouSpiderSpider(scrapy.Spider):
@@ -24,14 +24,14 @@ class WechatSougouSpiderSpider(scrapy.Spider):
     channels = ['热门', '搞笑', '养生堂', '私房话', '八卦金', '科技咖', '财经迷', '汽车控', '生活家', '时尚圈', '育儿', '旅游',
                 '职场', '美食', '历史', '教育', '星座', '体育', '军事', '游戏', '萌宠']
     custom_settings = {
-        'LOG_FILE':'{}\\{}.log'.format(log_dir,date),
+        'LOG_FILE': '{}\\{}.log'.format(log_dir, date),
         'ITEM_PIPELINES': {
             'Jovi_longlasttime.pipelines.BloomFilterPipeline': 200,
             'Jovi_longlasttime.pipelines.Duppipline': 300,
             # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源
             'Jovi_longlasttime.pipelines.To_csv1': 500
         },
-        'DOWNLOAD_DELAY':1
+        'DOWNLOAD_DELAY': 1
 
     }
 

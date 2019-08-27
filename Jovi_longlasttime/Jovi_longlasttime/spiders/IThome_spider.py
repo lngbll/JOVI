@@ -16,7 +16,7 @@ class IthomeSpiderSpider(scrapy.Spider):
     start_urls = ['https://www.ithome.com/sitemap/']
 
     custom_settings = {
-        'LOG_FILE':'{}\\{}.log'.format(log_dir,date)
+        'LOG_FILE': '{}\\{}.log'.format(log_dir, date)
     }
 
     meta = {
