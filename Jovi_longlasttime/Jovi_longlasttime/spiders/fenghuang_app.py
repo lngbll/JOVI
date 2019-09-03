@@ -38,18 +38,27 @@ class FenghuangAppSpider(scrapy.Spider):
     }
 
     def start_requests(self):
-        pattern = 'https://api.iclient.ifeng.com/nlist?id={}&action={}&pullNum={}&gv=6.6.5&av=6.6.5&uid=354730010140238' \
+        pattern = 'https://api.iclient.ifeng.com/nlist?id={}&action={}&gv=6.6.5&av=6.6.5&uid=354730010140238' \
                   '&deviceid=354730010140238&proid=ifengnews&os=android_19&df=androidphone&vt=5&' \
                   'screen=720x1280&publishid=2011&nw=wifi&loginid=&st={}&sn=e6012433723c2ba75470963ff182c434'
+        form_data = {
+            'pushStatus': 1,
+            'installTime': 1566786187,
+            'openNum': 9,
+            'lastDoc': ',,,',
+            'closeWinCount': 0,
+            'closeWinType': None,
+            'closeWinTime': 0,
+        }
         meta = dict()
         for category, channel_id in self.channels.items():
             meta['second_tag'] = category
             meta['channel_id'] = channel_id
             url = pattern.format(channel_id, 'default', '', int(1000 * time.time()))
-            yield scrapy.Request(url, callback=self.get_article, meta=meta, dont_filter=True)
-            for i in range(1, 2):
-                url = pattern.format(meta['channel_id'], 'down', i, int(1000 * time.time()))
-                yield scrapy.Request(url, callback=self.get_article, meta=meta, dont_filter=True)
+            yield scrapy.FormRequest(url, callback=self.get_article, formdata=form_data, meta=meta, dont_filter=True)
+            # for i in range(1, 2):
+            #     url = pattern.format(meta['channel_id'], 'down', i, int(1000 * time.time()))
+            #     yield scrapy.Request(url, callback=self.get_article, meta=meta, dont_filter=True)
 
     def get_article(self, response):
         print(response.text)

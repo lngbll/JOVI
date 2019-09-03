@@ -45,3 +45,6 @@
 2019.7.15   1.URLboolem更改了库 重新爬了一遍网站来填充
 
 2019.7.16   1.头条源码改动，凤凰新闻bug
+
+2019.9.3    1.在tools里面新增了微博自动登录工具weibo_login,并在weibo_long_spider,weibo_short_blog中引用,让爬虫更加自动化。
+            2.解决无法导入的问题,可以在报错文件中写入 sys.path.append(os.path.abspath(os.getcwd()))

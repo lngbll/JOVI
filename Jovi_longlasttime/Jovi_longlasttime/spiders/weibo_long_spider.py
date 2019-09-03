@@ -2,22 +2,24 @@ import json
 import logging
 import os
 import re
+import sys
 
 import redis
-import requests
 from lxml import etree
 from requests import exceptions
 from scrapy import Selector
 
+sys.path.append(os.path.abspath(os.getcwd()))
 from Jovi_longlasttime.settings import *
-from Jovi_longlasttime.tools.bloomfilter import BloomFilter
+from Jovi_longlasttime.tools import weibo_login, bloomfilter
+
+import time
 
 
 class WeiBoLongSpider(object):
 
     def __init__(self):
         # self.date = datetime.datetime.now().strftime('%m%d')
-
         log_dir = 'e:\\日志文件夹\\JOVI新闻爬虫\\weibo_long_spider'
         date = time.strftime('%Y-%m-%d', time.localtime())
         self.logger = logging.getLogger('weibo_long_spider')
@@ -35,9 +37,11 @@ class WeiBoLongSpider(object):
             os.mkdir(self.dir)
             os.chdir(self.dir)
         self.r = redis.Redis(host='localhost', port=6379, db=1)
-        self.bloomFilter = BloomFilter(redis=self.r, capacity=BLOOM_CAPACITY, error_rate=BLOOM_ERROR_RATE,
-                                       redis_key='JOVI_ARTICLES')
-        self.cookies = self.r.get('cookies')
+        self.bloomFilter = bloomfilter.BloomFilter(redis=self.r, capacity=BLOOM_CAPACITY, error_rate=BLOOM_ERROR_RATE,
+                                                   redis_key='JOVI_ARTICLES')
+        self.weibo_login = weibo_login.weibo_login()
+        self.weibo_login.run()
+        self.session = self.weibo_login.session
         self.channels = {
             '军事': '623751_4',
             '宠物': '623751_10008',
@@ -53,29 +57,6 @@ class WeiBoLongSpider(object):
             '运动健身': '623751_10009',
             '房产': '623751_9'
         }
-        self.headers1 = {
-            'Accept': '*/*',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'Accept-Language': 'zh-CN,zh;q=0.9',
-            'Cache-Control': 'no-cache',
-            'Connection': 'keep-alive',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Cookie': self.cookies,
-            'Host': 'd.weibo.com',
-            'Pragma': 'no-cache',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36',
-        }
-        self.headers2 = {
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'Accept-Language': 'zh-CN,zh;q=0.9',
-            'Cache-Control': 'no-cache',
-            'Connection': 'keep-alive',
-            'Cookie': self.cookies,
-            'Host': 'weibo.com',
-            'Pragma': 'no-cache',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36'
-        }
         print('redis开启')
 
     def start_requests(self, v, page):
@@ -87,12 +68,12 @@ class WeiBoLongSpider(object):
 
     def get_url(self, url):
         try:
-            resp = requests.get(url, headers=self.headers1)
+            resp = self.session.get(url)
             DOM = self.json_to_dom(resp)
             urls = DOM.xpath('//ul[@class="pt_ul clearfix"]/li/@href')
             return urls
         except Exception as e:
-            self.logger.error('出现异常 %s' % url, exc_info=True)
+            self.logger.exception(e)
 
     def json_to_dom(self, resp):
         try:
@@ -111,7 +92,7 @@ class WeiBoLongSpider(object):
             else:
                 url = 'https:' + url
             try:
-                resp = requests.get(url, headers=self.headers2)
+                resp = self.session.get(url)
                 resp.raise_for_status()
             except exceptions:
                 return
@@ -130,8 +111,6 @@ class WeiBoLongSpider(object):
             content = content.replace('\xa0', '').replace('\u3000', '').replace('\r', '').replace('\n', '') \
                 .replace('\t', '')
             title = selector.xpath('//div[@class="title"]/text()').extract_first().strip()
-            # s1 = sha1(title.encode('utf-8'))
-            # fp = s1.hexdigest()
             if self.bloomFilter.contains(title):
                 print('重复>>%s' % title)
                 return
@@ -146,7 +125,7 @@ class WeiBoLongSpider(object):
                 else:
                     print('太短>>%s' % title)
         except Exception as e:
-            self.logger.error('出现异常 %s' % url, exc_info=True)
+            self.logger.exception(e)
 
     def main(self):
         global counter
@@ -168,12 +147,6 @@ class WeiBoLongSpider(object):
                     except Exception:
                         self.logger.error('出现异常', exc_info=True)
                 page += 1
-        # count = 0
-        # with open('统计.txt', 'w', encoding='utf-8') as c:
-        #     for i in counter.keys():
-        #         count += counter[i]
-        #         c.write('%s:%d' % (i, counter[i]))
-        #     c.write('总数:%s' % count)
 
 
 if __name__ == '__main__':

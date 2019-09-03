@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Jovi_longlasttime.iml" filepath="$PROJECT_DIR$/.idea/Jovi_longlasttime.iml" />
+      <module fileurl="file://E:/低质图片爬虫/.idea/低质图片爬虫.iml" filepath="E:/低质图片爬虫/.idea/低质图片爬虫.iml" />
+      <module fileurl="file://E:/视频爬虫项目/.idea/视频爬虫项目.iml" filepath="E:/视频爬虫项目/.idea/视频爬虫项目.iml" />
     </modules>
   </component>
 </project>

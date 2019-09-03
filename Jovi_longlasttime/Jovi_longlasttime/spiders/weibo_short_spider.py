@@ -1,15 +1,19 @@
 import codecs
 import json
+import logging
 import os
 import random
 import re
+import sys
 from hashlib import sha1
 
 import redis
-import requests
 from requests import exceptions
 from scrapy import Selector
-import time,logging
+
+sys.path.append(os.path.abspath(os.getcwd()))
+import time
+from Jovi_longlasttime.tools.weibo_login import weibo_login
 
 
 class weibo_short_spider(object):
@@ -22,51 +26,13 @@ class weibo_short_spider(object):
         self.formatter = logging.Formatter('%(asctime)s-%(name)s-%(levelname)s-%(message)s')
         self.handler.setFormatter(self.formatter)
         self.logger.addHandler(self.handler)
-        self.r = redis.Redis(host='localhost',port=6379,db=1)
-        self.cookies = self.r.get('cookies')
-        print(self.cookies)
-        self.head1 = {
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'Accept-Language': 'zh-CN,zh;q=0.9',
-            'Cache-Control': 'no-cache',
-            'Connection': 'keep-alive',
-            'Cookie': self.cookies,
-            'Host': 'd.weibo.com',
-            'Pragma': 'no-cache',
-            'Upgrade-Insecure-Requests': '1',
-            'User-Agent ': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36'
-        }
-        self.head2 = {
-            'Accept': '*/*',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'Accept-Language': 'zh-CN,zh;q=0.9',
-            'Cache-Control': 'no-cache',
-            'Connection': 'keep-alive',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Cookie': self.cookies,
-            'Host': 'd.weibo.com',
-            'Pragma': 'no-cache',
-            'Referer': 'https://d.weibo.com/102803_ctg1_6288_-_ctg1_6288?from=faxian_hot&mod=fenlei',
-            'X-Requested-With': 'XMLHttpRequest',
-            'User-Agent ': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36'
-        }
-        self.head3 = {
-            'Accept': '*/*',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'Accept-Language': 'zh-CN,zh;q=0.9',
-            'Cache-Control': 'no-cache',
-            'Connection': 'keep-alive',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Cookie': self.cookies,
-            'Host': 'd.weibo.com',
-            'Pragma': 'no-cache',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36',
-            'X-Requested-With ': 'XMLHttpRequest'
-        }
+        self.r = redis.Redis(host='localhost', port=6379, db=1)
+        self.weibo_login = weibo_login()
+        self.weibo_login.run()
+        self.session = self.weibo_login.session
 
     def get_channels(self, url):
-        resp = requests.get(url, headers=self.head1)
+        resp = self.session.get(url, )
         data = re.search(r'"html":"<div class=\\"WB_cardwrap S_bg2\\">(.*?)<\\/div>\\n"}\)</script>', resp.text).group(
             1)
         html = codecs.escape_decode(bytes(data, 'utf-8'))[0].decode('utf-8')
@@ -77,8 +43,6 @@ class weibo_short_spider(object):
             k = re.search(r'<span class="text width_fix W_autocut">(.*?)<\\/span', i, re.S).group(1).strip()
             id = re.search(r'/(.*?)\?', url).group(1)
             print(k, id)
-            # yield scrapy.Request(url='https://d.weibo.com' + url, callback=self.get_text, meta=meta,
-            #                      headers=self.header2)
             c[k] = id
         return c
 
@@ -119,7 +83,7 @@ class weibo_short_spider(object):
         global counter
         time.sleep(random.random())
         try:
-            resp = requests.get(url, headers=self.head3)
+            resp = self.session.get(url)
             resp.raise_for_status()
         except exceptions:
             return
@@ -152,11 +116,8 @@ class weibo_short_spider(object):
             else:
                 print('太短>>%s' % (content[:11] + '...'))
 
-
     def main(self, url):
         os.chdir('e:')
-        # now = datetime.datetime.now()
-        # date = now.strftime('%m%d')
         if not os.path.exists('e:\微博短文'):
             os.mkdir('e:\微博短文')
         os.chdir('e:\微博短文')
@@ -170,7 +131,7 @@ class weibo_short_spider(object):
             while '话题page页面返回为空时' not in html:
                 try:
                     page_url = self.get_page(page, v)
-                    res = requests.get(page_url, headers=self.head2)
+                    res = self.session.get(page_url)
                     data = json.loads(res.text)
                     html = data['data']
                     urls = self.get_urls(html)
@@ -178,10 +139,9 @@ class weibo_short_spider(object):
                         self.get_content(i, k, r)
                     page += 1
                     time.sleep(1)
-                except Exception:
-                    logging.error('ip被禁',exc_info=False)
-                    print('被禁IP,等待10分钟......')
-
+                except Exception as e:
+                    self.logger.exception(e)
+                    time.sleep(120)
 
 
 if __name__ == '__main__':
@@ -189,4 +149,3 @@ if __name__ == '__main__':
     url = 'https://d.weibo.com/?topnav=1&mod=logo&wvr=6'
     a = weibo_short_spider()
     a.main(url)
-
