@@ -31,10 +31,10 @@ DOWNLOADER_MIDDLEWARES = {
 }
 
 ITEM_PIPELINES = {
-    'Jovi_longlasttime.pipelines.BloomFilterPipeline': 200,
-    'Jovi_longlasttime.pipelines.Duppipline': 100,
-    # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源
-    'Jovi_longlasttime.pipelines.To_csv': 500  # 三级文件夹
+        'Jovi_longlasttime.pipelines.BloomFilterPipeline': 200,
+        'Jovi_longlasttime.pipelines.Duppipline': 100,
+        # # 'Jovi_longlasttime.pipelines.Mongopipline': 400,   #默认不开启MongoDB,节省内存资源
+        'Jovi_longlasttime.pipelines.To_csv': 500  # 三级文件夹
 }
 
 LOG_ENABLED = True

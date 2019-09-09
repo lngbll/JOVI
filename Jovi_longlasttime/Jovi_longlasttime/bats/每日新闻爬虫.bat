@@ -13,7 +13,7 @@ scrapy crawl wechat_sougou_spider
 scrapy crawl xinhua_spider
 scrapy crawl 163spider
 scrapy crawl tencent_new_spider
-scrapy crawl Zaker_spider
+scrapy crawl Zaker_spider_1_1
 scrapy crawl dongfangtoutiao_spider
 pause
 

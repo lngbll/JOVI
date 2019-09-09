@@ -48,3 +48,5 @@
 
 2019.9.3    1.在tools里面新增了微博自动登录工具weibo_login,并在weibo_long_spider,weibo_short_blog中引用,让爬虫更加自动化。
             2.解决无法导入的问题,可以在报错文件中写入 sys.path.append(os.path.abspath(os.getcwd()))
+
+2019.9.9    1.zaker新闻改版，新增Zaker_spider_1_1.py
