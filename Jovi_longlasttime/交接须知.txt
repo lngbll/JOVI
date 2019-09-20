@@ -1,0 +1,81 @@
+JOVI新闻爬虫项目交接
+
+项目需求
+    爬取各大新闻网站的新闻，要求：
+    1.根据网站板块，新闻分类。将新闻存储在txt文档中，比如腾讯新闻如果有体育，科技，军事等板块，那相应的就用腾讯新闻/体育.txt，腾讯新闻/科技.txt,
+    腾讯新闻/军事.txt.如果有更细的分类，就再建一级目录，比如腾讯新闻/体育/足球.txt;
+    2.新闻内容只要标题和正文，一行一条，标题和正文用','分隔，尽可能的去掉正文中的作者，编辑，图片来自，图片名字等这样的内容，换行符\r\n\t等也
+    不要，总之就是文档中一行一条新闻；
+    3.新闻内容不得少于200字；
+    3.需要对内容进行增量更新，以标题进行全局去重；
+    4.网站要一天一爬，一周一提交（周一上午），提交方式为txt文档的文件夹，将文件夹压缩为zip格式后用v消息给陈蕾颖；
+    5.需要统计各个网站下每个新闻分类的新闻数量，写在excel表格中一起提交；
+
+
+项目设计
+    0.项目环境,python3,requirements.txt,redis,
+    1.利用了Scrapy框架，一个网站写一个spider
+    2.url去重和新闻标题去重利用redis,布隆去重
+    3.redis最好设置为一天一次持久化，多了电脑吃不消。
+    4.运行利用bat文件夹中的.bat文件在windows定时任务中设置为每日一次，每周运行一次count_as_csv.py打包并统计
+    5.需要安装的库：scrapy,urllib,execjs,redis,requests,pymongo,lxml,selenium,pymmh3,rsa
+    6.日志。日志按照网站和日期存在日志文件夹中
+    7.项目目录说明
+        Jovi_longlasttime
+            /Jovi
+                /bats (windows批处理文件，用于在windows任务管理中设置任务定时任务）
+                    /微博短文.bat
+                    /微博长文.bat
+                    /每日新闻爬虫.bat
+                /spiders（爬虫）
+                    /__init.py
+                    /autohome.py（汽车之家）
+                    /CCTVspider.py（央视新闻）
+                    /dongfangtoutiao_spider.py（东方头条）
+                    /fenghuang_app.py（#凤凰新闻app,目前没有加入每日爬虫）
+                    /fenghuang_new_spider.py（#凤凰新闻手机版）
+                    /fenghuang_spider.py（凤凰新闻Web版）
+                    /IThome_spider.py（IT之家）
+                    /kuaibao_spider.py（#腾讯快报，服务器已经关停）
+                    /renmingwang_spider.py（人民网）
+                    /sina_roll_spider.py（#新浪滚动新闻，一次性爬虫）
+                    /sina_spider.py（手机新浪网，每日）
+                    /tengcent_new_spider.py（腾讯新闻，每日）
+                    /toutiao.py(破解加密，收集url)
+                    /toutiao_new_spider.py(今日头条，每日）
+                    /UC.py（#UC头条，服务器已经关停）
+                    /wechat_sougou_spider.py（搜狗微信搜索，每日）
+                    /weibo_long_spider.py（微博长文爬虫，每日，不利用scrapy框架）
+                    /weibo_short_spider.py（微博短文文爬虫，每日，不利用scrapy框架）
+                    /weiboname.py（#微博ID爬虫，一次性爬虫）
+                    /xinhua_spider.py（新华网，每日）
+                    /yidian_app.py（一点资讯app,每日）
+                    /yidian_new_spider.py（#一点资讯，因更新量少而弃用）
+                    /Zaker_spider.py（#Zaker新闻，因改版弃用）
+                    /Zaker_spider_1_1.py（Zaker新闻，每日）
+                /tools（工具脚本）
+                    /__init__.py
+                    /bloomfilter.py（布隆去重工具类）
+                    /changeFileTail.py（改文件后缀）
+                    /count.py（统计）
+                    /delete.py
+                    /redisSet_to_bloomfilter.py(将历史url填充到布隆去重的键中去）
+                    /replace.py
+                    /weibo_login.py（微博登陆类）
+                /__init.py
+                /items.py
+                /middlewares.py
+                /pipelines.py(管道)
+                /settings.py（全局设置，每个爬虫还有单独的具备设置custom_settings)
+                /signature.js(今日头条一段js代码)
+                /Use_agent.py（UA池）
+                /weibo_pipelines.py(微博专用pipelines)
+            /scrapy.cfg
+            /count_as_csv.py（统计并写入excel)
+            /requirements.py
+
+注意事项
+        1.redis持久化频率一天一次就好了
+        2.日志文件为空表示没有问题
+        3.
+
